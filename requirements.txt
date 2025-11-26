@@ -2,5 +2,6 @@ fastapi
 httpx
 python-jose[cryptography]
 uvicorn
-dotenv
+python-dotenv
+jira
 
