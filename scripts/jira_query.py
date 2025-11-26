@@ -26,7 +26,7 @@ def query_current_sprint(client: JiraClient):
     print("="*70)
 
     try:
-        board_id = client.get_board_id('CV')
+        board_id = client.get_board_id('KAN')
         sprint = client.get_current_sprint(board_id)
 
         if not sprint:
@@ -59,7 +59,7 @@ def query_backlog(client: JiraClient, limit: int = 10):
     print("="*70)
 
     try:
-        jql = 'project = CV AND sprint is EMPTY AND status != Done ORDER BY priority DESC, created ASC'
+        jql = 'project = KAN AND sprint is EMPTY AND status != Done ORDER BY priority DESC, created ASC'
         issues = client.query_issues(jql, max_results=limit)
 
         if not issues:

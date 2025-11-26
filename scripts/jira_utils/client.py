@@ -80,15 +80,10 @@ class JiraClient:
             return project
         except JIRAError as e:
             if e.status_code == 404:
-                print(f"Project '{key}' not found. Creating...")
-                # Note: Project creation via API requires admin permissions
-                # For Jira Cloud, projects are usually created via UI
                 raise RuntimeError(
-                    f"Project '{key}' does not exist. Please create it manually in Jira:\n"
-                    f"1. Go to {self.server}\n"
-                    f"2. Create new project with key '{key}' and name '{name}'\n"
-                    f"3. Choose 'Scrum' template\n"
-                    f"4. Re-run this script"
+                    f"Project '{key}' not found in Jira.\n"
+                    f"Available projects: {[p.key for p in self.jira.projects()]}\n"
+                    f"Please check the project key or create it manually."
                 )
             else:
                 raise

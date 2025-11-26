@@ -221,10 +221,10 @@ Comprehensive docs in `docs/`:
 ContextVault uses Jira as the single source of truth for project management.
 
 ### Jira Project Details
-- **Project Key:** CV
-- **Project URL:** https://davidjmorgan26.atlassian.net/jira/software/c/projects/CV
-- **Board:** CV Scrum Board
-- **GitHub Integration:** Enabled (commits with CV-XX auto-link)
+- **Project Key:** KAN
+- **Project URL:** https://davidjmorgan26.atlassian.net/jira/software/c/projects/KAN
+- **Board:** KAN Scrum Board
+- **GitHub Integration:** Enabled (commits with KAN-XX auto-link)
 
 ### Issue Hierarchy
 - **Epics:** Large features spanning multiple sprints (11 epics)
@@ -242,7 +242,7 @@ python scripts/jira_migrate.py            # Full migration
 ```bash
 python scripts/jira_query.py --current-sprint    # See current sprint
 python scripts/jira_query.py --backlog           # See backlog
-python scripts/jira_query.py --epic CV-1         # See epic stories
+python scripts/jira_query.py --epic KAN-1        # See epic stories
 ```
 
 **Backup:**
@@ -254,21 +254,21 @@ python scripts/jira_export.py --output docs/archive/jira_backup.md
 
 Link commits to Jira issues using issue key:
 ```bash
-git commit -m "CV-42: Add encryption service"
+git commit -m "KAN-42: Add encryption service"
 ```
 
 GitHub integration will automatically:
-- Link commit to Jira issue CV-42
+- Link commit to Jira issue KAN-42
 - Show commit in issue activity
 - Update issue status if using smart commits
 
 ### Smart Commits (Optional)
 ```bash
 # Add comment to issue
-git commit -m "CV-42 #comment Fixed validation bug"
+git commit -m "KAN-42 #comment Fixed validation bug"
 
 # Transition issue
-git commit -m "CV-42 #done Completed feature"
+git commit -m "KAN-42 #done Completed feature"
 ```
 
 ### Historical Documentation

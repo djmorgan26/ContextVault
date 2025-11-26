@@ -93,7 +93,7 @@ def main():
     # Verify/create project
     print("\n📁 Verifying project...")
     try:
-        project = client.get_or_create_project('CV', 'ContextVault')
+        project = client.get_or_create_project('KAN', 'ContextVault')
     except Exception as e:
         print(f"\n✗ Error: {e}")
         sys.exit(1)
@@ -127,6 +127,10 @@ def main():
         epic_key = epic_keys[epic.doc_id]
         print(f"\n  Epic {epic_key}: {epic.name}")
 
+        if not epic.stories:
+            print(f"    (No stories in this epic)")
+            continue
+
         for story in epic.stories:
             story_fields = map_story_to_jira(story, epic_key, client.custom_fields)
             try:
@@ -143,7 +147,7 @@ def main():
     if not args.epic:  # Only create sprints if not filtering by epic
         print(f"\n🏃 Creating {len(sprints)} sprints...")
         try:
-            board_id = client.get_board_id('CV')
+            board_id = client.get_board_id('KAN')
         except Exception as e:
             print(f"✗ Error getting board: {e}")
             print("Skipping sprint creation")
@@ -151,7 +155,7 @@ def main():
 
         if board_id:
             sprint_ids = {}
-            for sprint_num in sorted(sprints.keys()):
+            for sprint_num in sorted(sprints.keys())[:9]:  # Only first 9 sprints
                 sprint_info = sprints[sprint_num]
 
                 # Sprint 1 starts today, others have no start date
@@ -195,7 +199,7 @@ def main():
         print(f"  • {len(sprints)} sprints")
 
     print(f"\n🔗 View your Jira board:")
-    print(f"   {client.server}/jira/software/c/projects/CV")
+    print(f"   {client.server}/jira/software/c/projects/KAN")
 
     print(f"\n📚 Next steps:")
     print(f"  1. Review the Jira board to ensure everything looks correct")

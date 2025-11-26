@@ -54,7 +54,7 @@ def map_epic_to_jira(epic: Epic, custom_fields: Dict[str, str]) -> Dict[str, Any
     epic_num = epic.doc_id.lower().replace(' ', '-')
 
     fields = {
-        'project': {'key': 'CV'},
+        'project': {'key': 'KAN'},
         'summary': epic.name,
         'description': description,
         'issuetype': {'name': 'Epic'},
@@ -119,7 +119,7 @@ def map_story_to_jira(story: Story, epic_key: str, custom_fields: Dict[str, str]
     labels = [feature_label, story.priority.lower()] + type_labels
 
     fields = {
-        'project': {'key': 'CV'},
+        'project': {'key': 'KAN'},
         'summary': f"{story.doc_id}: {story.summary}",
         'description': description,
         'issuetype': {'name': 'Story'},

@@ -26,7 +26,7 @@ def export_all(client: JiraClient, output_file: str):
 
     try:
         # Query all issues
-        jql = 'project = CV ORDER BY created ASC'
+        jql = 'project = KAN ORDER BY created ASC'
         issues = client.query_issues(jql, max_results=1000)
 
         with open(output_file, 'w', encoding='utf-8') as f:
@@ -74,7 +74,7 @@ def export_sprint(client: JiraClient, sprint_id: str, output_file: str):
 
     try:
         if sprint_id == 'current':
-            board_id = client.get_board_id('CV')
+            board_id = client.get_board_id('KAN')
             sprint = client.get_current_sprint(board_id)
             if not sprint:
                 print("No active sprint")
