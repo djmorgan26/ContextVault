@@ -284,8 +284,8 @@ These files are frozen. All project management happens in Jira.
 ## Project Roadmap
 
 ### MVP (Current)
-- [x] Epic SMART on FHIR OAuth + PKCE
-- [x] Basic FHIR resource fetching (Patient, Observation)
+- [ ] Epic SMART on FHIR OAuth + PKCE
+- [ ] Basic FHIR resource fetching (Patient, Observation)
 - [ ] Google OAuth authentication
 - [ ] Encrypted vault storage
 - [ ] Local Ollama chat
