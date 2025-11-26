@@ -21,6 +21,7 @@
   - All directories have proper `__init__.py` files
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 1.1.2:** As a developer, I need automated code formatting and linting so that code quality is consistent
 - **Acceptance Criteria:**
@@ -30,6 +31,7 @@
   - Ruff checks pass with no errors
 - **Priority:** P0
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 **User Story 1.1.3:** As a developer, I need a convenient way to run common tasks so that development is efficient
 - **Acceptance Criteria:**
@@ -39,6 +41,7 @@
   - `make install` sets up virtual environment and dependencies
 - **Priority:** P0
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 **User Story 1.1.4:** As a developer, I need all required dependencies installed so that I can build features
 - **Acceptance Criteria:**
@@ -47,6 +50,7 @@
   - Versions pinned for reproducibility
 - **Priority:** P0
 - **Estimate:** 30 minutes
+- **Status:** Not Started
 
 ### Feature 1.2: Configuration Management
 
@@ -59,6 +63,7 @@
   - Provides helpful error messages if required vars missing
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 ### Feature 1.3: Database Setup
 
@@ -70,6 +75,7 @@
   - Proper session cleanup (close after request)
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 1.3.2:** As a developer, I need database migration management so that schema changes are version controlled
 - **Acceptance Criteria:**
@@ -79,6 +85,7 @@
   - Can generate new migrations with `alembic revision --autogenerate`
 - **Priority:** P0
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 ---
 
@@ -99,6 +106,7 @@
   - Master key is NEVER stored, always derived on-demand
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 **User Story 2.1.2:** As a user, I need my vault content encrypted with industry-standard encryption so that it cannot be decrypted without my key
 - **Acceptance Criteria:**
@@ -109,6 +117,7 @@
   - Encrypted output is different each time (due to unique nonce)
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 **User Story 2.1.3:** As a user, I need tamper detection on my encrypted data so that any modification is detected
 - **Acceptance Criteria:**
@@ -118,6 +127,7 @@
   - Returns plaintext only if all checks pass
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 2.1.4:** As a developer, I need 100% test coverage on encryption so that I'm confident in the security implementation
 - **Acceptance Criteria:**
@@ -130,6 +140,7 @@
   - 100% code coverage on encryption module
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 ### Feature 2.2: JWT Authentication
 
@@ -141,6 +152,7 @@
   - Returns signed JWT string
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 2.2.2:** As a developer, I need token validation as a FastAPI dependency so that routes can require authentication
 - **Acceptance Criteria:**
@@ -151,6 +163,7 @@
   - Can be used with `Depends(get_current_user)` on routes
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 2.2.3:** As a user, I need refresh tokens so that I don't have to log in every 30 minutes
 - **Acceptance Criteria:**
@@ -160,6 +173,7 @@
   - `hash_refresh_token()` function for secure storage
 - **Priority:** P0
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 ---
 
@@ -182,6 +196,7 @@
   - All models have created_at, updated_at timestamps
 - **Priority:** P0
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 **User Story 3.1.2:** As a developer, I need Pydantic schemas for API validation so that requests are validated
 - **Acceptance Criteria:**
@@ -192,6 +207,7 @@
   - Response schemas exclude sensitive fields (encrypted content in list views)
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 ### Feature 3.2: Initial Migration
 
@@ -205,6 +221,7 @@
   - `make migrate` applies migration
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 ---
 
@@ -224,6 +241,7 @@
   - State stored temporarily (Redis or in-memory with 5min TTL)
 - **Priority:** P0
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 **User Story 4.1.2:** As a user, when I approve Google OAuth, I want to be redirected back with a session so that I'm logged in
 - **Acceptance Criteria:**
@@ -237,6 +255,7 @@
   - Returns access_token + refresh_token in response
 - **Priority:** P0
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 **User Story 4.1.3:** As a user, I want to refresh my access token so that I stay logged in without re-authenticating
 - **Acceptance Criteria:**
@@ -248,6 +267,7 @@
   - Returns new access_token
 - **Priority:** P0
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 **User Story 4.1.4:** As a user, I want to log out so that my session is invalidated
 - **Acceptance Criteria:**
@@ -257,6 +277,7 @@
   - Subsequent requests with old access_token fail after expiry
 - **Priority:** P1
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 **User Story 4.1.5:** As a user, I want to view my profile so that I can see my account information
 - **Acceptance Criteria:**
@@ -265,6 +286,7 @@
   - Does NOT return encryption_salt (security)
 - **Priority:** P1
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 ### Feature 4.2: Authentication Service Layer
 
@@ -277,6 +299,7 @@
   - Service methods are unit testable
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 ---
 
@@ -298,6 +321,7 @@
   - Sets source=manual, user_id=current_user
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 **User Story 5.1.2:** As a user, I want to view a specific vault item so that I can read my stored data
 - **Acceptance Criteria:**
@@ -308,6 +332,7 @@
   - Returns 404 if item doesn't exist or is soft-deleted
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 5.1.3:** As a user, I want to list my vault items so that I can browse my data
 - **Acceptance Criteria:**
@@ -320,6 +345,7 @@
   - Orders by created_at DESC
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 **User Story 5.1.4:** As a user, I want to update a vault item so that I can modify my stored data
 - **Acceptance Criteria:**
@@ -331,6 +357,7 @@
   - Returns updated item with decrypted content
 - **Priority:** P0
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 **User Story 5.1.5:** As a user, I want to delete a vault item so that I can remove unwanted data
 - **Acceptance Criteria:**
@@ -342,6 +369,7 @@
   - Returns 204 No Content
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 ### Feature 5.2: Vault Service Layer
 
@@ -355,6 +383,7 @@
   - Service is unit testable (mock encryption)
 - **Priority:** P0
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 ### Feature 5.3: Tag Management
 
@@ -366,6 +395,7 @@
   - Returns created tag
 - **Priority:** P1
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 5.3.2:** As a user, I want to list my tags so that I can see available organization options
 - **Acceptance Criteria:**
@@ -375,14 +405,27 @@
   - Orders by name alphabetically
 - **Priority:** P1
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
-**User Story 5.3.3:** As a user, I want to filter vault items by tags so that I can find related content
+**User Story 5.3.3:** As a user, I want to rename or delete tags so that I can reorganize my vault
+- **Acceptance Criteria:**
+  - PUT `/api/vault/tags/{tag_id}` allows renaming tag
+  - Updates all vault items with this tag automatically
+  - DELETE `/api/vault/tags/{tag_id}` removes tag
+  - Warns if tag has vault items (confirmation required)
+  - Deleting tag removes from all associated vault items
+- **Priority:** P2
+- **Estimate:** 3 hours
+- **Status:** Not Started
+
+**User Story 5.3.4:** As a user, I want to filter vault items by tags so that I can find related content
 - **Acceptance Criteria:**
   - GET `/api/vault/items?tags[]=work&tags[]=medical` supports multiple tags
   - Returns items that have ALL specified tags (AND logic)
   - Works with pagination and other filters
 - **Priority:** P1
 - **Estimate:** 2 hours (part of list_items)
+- **Status:** Not Started
 
 ### Feature 5.4: File Upload
 
@@ -399,6 +442,7 @@
   - Returns created vault item
 - **Priority:** P1
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 ---
 
@@ -422,6 +466,7 @@
     - aud=EPIC_FHIR_BASE
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Complete
 
 **User Story 6.1.2:** As a user, when I approve Epic OAuth, I want my tokens stored securely so that the app can sync my data
 - **Acceptance Criteria:**
@@ -435,8 +480,12 @@
   - Stores encrypted tokens in integration_tokens table
   - Queues background sync job
   - Returns integration status
+  - Error if Epic returns invalid tokens (set status=error)
+  - Retry logic on network failures (3 attempts with exponential backoff)
+  - Store integration status=error if callback fails
 - **Priority:** P0
 - **Estimate:** 6 hours
+- **Status:** In Progress
 
 **User Story 6.1.3:** As a user, I want to disconnect Epic so that my tokens are removed
 - **Acceptance Criteria:**
@@ -447,6 +496,7 @@
   - Returns 204 No Content
 - **Priority:** P1
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 ### Feature 6.2: FHIR Data Sync
 
@@ -465,6 +515,7 @@
   - Handles pagination if > 1000 observations
 - **Priority:** P0
 - **Estimate:** 8 hours
+- **Status:** Not Started
 
 **User Story 6.2.2:** As a user, I want to manually trigger Epic sync so that I can get the latest data on demand
 - **Acceptance Criteria:**
@@ -475,6 +526,7 @@
   - Returns 400 if Epic not connected
 - **Priority:** P1
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 6.2.3:** As a user, I want to see my Epic sync status so that I know when my data is updated
 - **Acceptance Criteria:**
@@ -484,6 +536,7 @@
   - Returns 404 if Epic not connected
 - **Priority:** P1
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 ### Feature 6.3: FHIR Transformations
 
@@ -496,6 +549,7 @@
   - Extracts: observation code, value, unit, effective date, reference ranges
 - **Priority:** P0
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 **User Story 6.3.2:** As a developer, I need Patient resources transformed so that demographic data is stored
 - **Acceptance Criteria:**
@@ -504,6 +558,7 @@
   - Metadata includes: full FHIR Patient JSON, primary care provider
 - **Priority:** P1
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 ### Feature 6.4: Token Refresh
 
@@ -518,6 +573,7 @@
   - Retry original FHIR request with new token
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 ### Feature 6.5: Epic Service Layer
 
@@ -531,6 +587,7 @@
   - Service is unit testable with mocked FHIR responses
 - **Priority:** P0
 - **Estimate:** 8 hours
+- **Status:** Not Started
 
 ---
 
@@ -555,6 +612,7 @@
   - Returns streaming response (text/event-stream)
 - **Priority:** P0
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 **User Story 7.1.2:** As a user, I want relevant vault items automatically included in chat context so that the AI has accurate information
 - **Acceptance Criteria:**
@@ -563,9 +621,12 @@
   - Filters by tags if specified in request
   - Limits to top 5 most recent matching items
   - Decrypts content before sending to LLM
+  - LLM must NOT receive metadata_encrypted (privacy protection)
+  - Context item previews truncated (e.g., 200 chars per item for performance)
   - Future: Vector embeddings for semantic search
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 ### Feature 7.2: Ollama Integration
 
@@ -579,6 +640,7 @@
   - Model configurable (default: llama3.1:8b)
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 **User Story 7.2.2:** As a user, I want the AI to use my vault data responsibly so that my privacy is maintained
 - **Acceptance Criteria:**
@@ -589,6 +651,7 @@
   - No conversation history stored (future: optional encrypted history)
 - **Priority:** P1
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 ### Feature 7.3: Context Retrieval Service
 
@@ -601,6 +664,7 @@
   - Future-ready: Can swap to vector embeddings (pgvector)
 - **Priority:** P0
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 ---
 
@@ -620,6 +684,7 @@
   - All tests pass
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 **User Story 8.1.2:** As a developer, I need comprehensive tests on JWT authentication so that auth is reliable
 - **Acceptance Criteria:**
@@ -628,6 +693,7 @@
   - All tests pass
 - **Priority:** P0
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 ### Feature 8.2: Integration Tests
 
@@ -639,6 +705,7 @@
   - 80%+ coverage on vault routes
 - **Priority:** P0
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 **User Story 8.2.2:** As a developer, I need integration tests for Epic API so that OAuth and sync work
 - **Acceptance Criteria:**
@@ -648,6 +715,7 @@
   - 70%+ coverage on Epic routes
 - **Priority:** P1
 - **Estimate:** 6 hours
+- **Status:** Not Started
 
 ### Feature 8.3: Test Infrastructure
 
@@ -659,6 +727,7 @@
   - Factory functions for creating test data
 - **Priority:** P0
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 **User Story 8.3.2:** As a developer, I need pytest configuration so that tests run consistently
 - **Acceptance Criteria:**
@@ -668,6 +737,7 @@
   - Overall target: 75%+ coverage
 - **Priority:** P0
 - **Estimate:** 1 hour
+- **Status:** Not Started
 
 ### Feature 8.4: CI/CD Pipeline
 
@@ -679,6 +749,7 @@
   - Runs on push to main/develop and all PRs
 - **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 **User Story 8.4.2:** As a developer, I need automated tests on every push so that bugs are caught early
 - **Acceptance Criteria:**
@@ -688,6 +759,7 @@
   - Fails pipeline if tests fail or coverage < 70%
 - **Priority:** P0
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 **User Story 8.4.3:** As a developer, I need security scanning so that vulnerabilities are detected
 - **Acceptance Criteria:**
@@ -696,6 +768,7 @@
   - Fails pipeline on high-severity vulnerabilities
 - **Priority:** P1
 - **Estimate:** 2 hours
+- **Status:** Not Started
 
 ---
 
@@ -716,6 +789,7 @@
   - Environment variables passed from `.env`
 - **Priority:** P2
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 ### Feature 9.2: API Documentation
 
@@ -727,6 +801,7 @@
   - Authentication flows documented
 - **Priority:** P2
 - **Estimate:** 2 hours (mostly auto-generated)
+- **Status:** Not Started
 
 ### Feature 9.3: Development Scripts
 
@@ -737,6 +812,7 @@
   - Idempotent (can run multiple times)
 - **Priority:** P3
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 ---
 
@@ -756,6 +832,7 @@
   - Sensitive data NOT included in error responses
 - **Priority:** P1
 - **Estimate:** 4 hours
+- **Status:** Not Started
 
 **User Story 10.1.2:** As a developer, I want structured logging so that I can debug production issues
 - **Acceptance Criteria:**
@@ -765,17 +842,39 @@
   - No sensitive data logged (decrypted content, tokens, keys)
 - **Priority:** P1
 - **Estimate:** 3 hours
+- **Status:** Not Started
+
+**User Story 10.1.3:** As a developer, I want audit logging for critical actions so I can debug user-specific incidents without exposing sensitive content
+- **Acceptance Criteria:**
+  - Logs: login, logout, create/delete vault item, Epic connect/disconnect
+  - Never log decrypted content or tokens
+  - Timestamped with user_id and action type
+  - Queryable for security investigations
+- **Priority:** P1
+- **Estimate:** 3 hours
+- **Status:** Not Started
 
 ### Feature 10.2: Security Hardening
 
 **User Story 10.2.1:** As a user, I want my API protected from common attacks so that my data is safe
 - **Acceptance Criteria:**
-  - Security headers middleware: X-Frame-Options, HSTS, CSP, X-Content-Type-Options
   - CORS configured with allowed origins from .env
-  - Rate limiting: 20/min chat, 100/min vault, 10/min auth
+  - Basic security headers: X-Frame-Options, X-Content-Type-Options
   - Input validation on all endpoints (max lengths, types)
 - **Priority:** P1
-- **Estimate:** 4 hours
+- **Estimate:** 2 hours
+- **Status:** Not Started
+
+**User Story 10.2.2:** As a developer, I want per-route rate limiting rules so chat cannot be spammed or abused
+- **Acceptance Criteria:**
+  - 20/min chat endpoints
+  - 100/min vault endpoints
+  - 10/min auth endpoints
+  - Global IP throttles for suspicious activity
+  - 429 Too Many Requests response
+- **Priority:** P1
+- **Estimate:** 3 hours
+- **Status:** Not Started
 
 ### Feature 10.3: Performance Optimization
 
@@ -787,6 +886,7 @@
   - Background tasks for slow operations (Epic sync)
 - **Priority:** P1
 - **Estimate:** 3 hours
+- **Status:** Not Started
 
 ### Feature 10.4: Health Checks
 
@@ -794,20 +894,191 @@
 - **Acceptance Criteria:**
   - GET `/health` returns 200 OK (basic liveness check)
   - GET `/health/db` checks database connectivity
-  - GET `/health/ollama` checks Ollama service
   - Used by Render/Railway for health monitoring
 - **Priority:** P1
+- **Estimate:** 1 hour
+- **Status:** Not Started
+
+### Feature 10.5: Environment Management
+
+**User Story 10.5.1:** As a developer, I want dev/prod environment variable separation so nothing breaks when deploying
+- **Acceptance Criteria:**
+  - `.env.local` for development
+  - `.env.production` for production
+  - Prevent accidental usage of dev OAuth credentials in production
+  - Secure default values for all required variables
+  - Validation on startup (fail fast if required vars missing)
+- **Priority:** P0
 - **Estimate:** 2 hours
+- **Status:** Not Started
+
+### Feature 10.6: Deployment Pipeline
+
+**User Story 10.6.1:** As a developer, I need a pinned reproducible environment in prod so that deployment is predictable
+- **Acceptance Criteria:**
+  - Production-ready Dockerfile with pinned dependencies
+  - Run migrations automatically on deploy
+  - Verify health endpoint after deploy
+  - Rollback mechanism if health check fails
+- **Priority:** P1
+- **Estimate:** 4 hours
+- **Status:** Not Started
+
+### Feature 10.7: Backup & Recovery
+
+**User Story 10.7.1:** As a user, I want encrypted backups of my vault so I don't lose data
+- **Acceptance Criteria:**
+  - Daily automated backup of encrypted database (not plaintext)
+  - Backups stored in Railway or S3
+  - Recovery script to restore from backup
+  - Must NOT decrypt anything during backup process
+  - Test restore process monthly
+- **Priority:** P1
+- **Estimate:** 4 hours
+- **Status:** Not Started
+
+---
+
+## Epic 11: Frontend Integration [P0]
+
+**Goal:** Build minimal React UI for authentication, vault management, and chat
+
+**Timeline:** Week 4-5
+
+### Feature 11.1: Authentication UI
+
+**User Story 11.1.1:** As a user, I want a "Sign In with Google" button that sends me through the OAuth flow so I can log in easily
+- **Acceptance Criteria:**
+  - Button redirects to backend `/api/auth/google/login` endpoint
+  - Handles OAuth callback and stores access_token + refresh_token securely
+  - Stores tokens in memory or HttpOnly cookies (not localStorage for XSS protection)
+  - Calls `/api/auth/me` to verify session and load user profile
+  - Redirects to vault dashboard after successful login
+- **Priority:** P0
+- **Estimate:** 4 hours
+- **Status:** Not Started
+
+**User Story 11.1.2:** As a user, I want automatic refresh of my access token so I stay logged in without interruption
+- **Acceptance Criteria:**
+  - Frontend service detects 401 Unauthorized responses
+  - Automatically calls `/api/auth/refresh` with refresh_token
+  - Retries original request with new access_token
+  - Logs out cleanly if refresh fails (redirect to login)
+  - No flash of login screen during valid refresh
+- **Priority:** P0
+- **Estimate:** 3 hours
+- **Status:** Not Started
+
+**User Story 11.1.3:** As a user, I want to log out so that my session ends
+- **Acceptance Criteria:**
+  - Logout button calls `/api/auth/logout`
+  - Clears all tokens from memory/cookies
+  - Redirects to login page
+  - Displays confirmation message
+- **Priority:** P1
+- **Estimate:** 1 hour
+- **Status:** Not Started
+
+### Feature 11.2: Vault UI
+
+**User Story 11.2.1:** As a user, I want a simple UI to create, view, and edit vault items
+- **Acceptance Criteria:**
+  - List view shows vault items (title, type, tags, created_at)
+  - List view does NOT show decrypted content (performance)
+  - Create button opens editor modal
+  - Click item to view full decrypted content
+  - Edit button opens editor with existing content
+  - Delete with confirmation dialog
+  - Snappy pagination (50 items per page)
+- **Priority:** P0
+- **Estimate:** 8 hours
+- **Status:** Not Started
+
+**User Story 11.2.2:** As a user, I want a clean editor for vault content
+- **Acceptance Criteria:**
+  - Markdown or plaintext editor
+  - Title field (required)
+  - Content field (textarea or markdown editor)
+  - Tag selector (multi-select with create new option)
+  - Type selector (note, password, file, medical_record)
+  - Save button persists to backend
+  - Shows updated_at timestamp after save
+  - Auto-save draft every 30 seconds (optional)
+- **Priority:** P0
+- **Estimate:** 6 hours
+- **Status:** Not Started
+
+**User Story 11.2.3:** As a user, I want to filter vault items by tags and type so that I can find related content
+- **Acceptance Criteria:**
+  - Tag filter dropdown (multi-select)
+  - Type filter dropdown (single select)
+  - Search bar for title full-text search
+  - Filters apply in real-time (debounced)
+  - Clear filters button
+  - Filter state preserved in URL query params
+- **Priority:** P1
+- **Estimate:** 4 hours
+- **Status:** Not Started
+
+### Feature 11.3: Chat UI
+
+**User Story 11.3.1:** As a user, I want a chat UI that streams responses from the backend so that the chat feels real-time
+- **Acceptance Criteria:**
+  - Chat input box at bottom
+  - Send button triggers POST `/api/chat` with SSE streaming
+  - Display vault context excerpts used (with vault_item IDs)
+  - Stream message chunks as they arrive from backend
+  - Display partial messages during streaming
+  - Show "AI is typing..." indicator
+  - Final message displayed when `done` event received
+  - Chat history displayed (user messages + AI responses)
+- **Priority:** P0
+- **Estimate:** 8 hours
+- **Status:** Not Started
+
+**User Story 11.3.2:** As a user, I want to filter which vault items are used as chat context
+- **Acceptance Criteria:**
+  - Tag filter dropdown in chat UI
+  - Selected tags sent with chat request
+  - Context event shows which items were used
+  - Clear indication when no context found for query
+- **Priority:** P1
+- **Estimate:** 2 hours
+- **Status:** Not Started
+
+### Feature 11.4: Frontend Infrastructure
+
+**User Story 11.4.1:** As a developer, I need a React + Vite + TypeScript project with shadcn/ui components
+- **Acceptance Criteria:**
+  - Vite project initialized in `frontend/` directory
+  - TypeScript configured with strict mode
+  - shadcn/ui installed and configured
+  - API client service for backend calls (axios or fetch)
+  - Environment variables: `VITE_API_BASE_URL`, `VITE_GOOGLE_OAUTH_CLIENT_ID`
+  - Hot reload works for local development
+- **Priority:** P0
+- **Estimate:** 3 hours
+- **Status:** Not Started
+
+**User Story 11.4.2:** As a developer, I need frontend auth state management so that protected routes work
+- **Acceptance Criteria:**
+  - Auth context provider (React Context or Zustand)
+  - Protected route wrapper (redirects to login if not authenticated)
+  - Token refresh logic in API interceptor
+  - User profile state globally accessible
+- **Priority:** P0
+- **Estimate:** 4 hours
+- **Status:** Not Started
 
 ---
 
 ## Summary
 
-**Total Epics:** 10
-**Total Features:** 31
-**Total User Stories:** 85+
+**Total Epics:** 11
+**Total Features:** 37
+**Total User Stories:** 100+
 
-**Critical Path (Week 1-3):**
+**Critical Path (Week 1-5):**
 1. Epic 1: Foundation (3 days)
 2. Epic 2: Security (2 days)
 3. Epic 3: Database (1 day)
@@ -816,9 +1087,10 @@
 6. Epic 6: Epic Integration (3 days)
 7. Epic 7: Chat (2 days)
 8. Epic 8: Testing (2 days)
+9. Epic 11: Frontend (4 days)
 
 **Post-MVP:**
 9. Epic 9: Developer Experience
 10. Epic 10: Production Readiness
 
-**Estimated Total:** 18 days (3.5 weeks) for core features + testing
+**Estimated Total:** 22 days (4.5 weeks) for core features + frontend + testing
