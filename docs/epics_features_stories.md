@@ -22,6 +22,8 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: Backend Structure)
 
 **User Story 1.1.2:** As a developer, I need automated code formatting and linting so that code quality is consistent
 - **Acceptance Criteria:**
@@ -32,6 +34,8 @@
 - **Priority:** P0
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/deployment.md` (Section: Development Setup)
 
 **User Story 1.1.3:** As a developer, I need a convenient way to run common tasks so that development is efficient
 - **Acceptance Criteria:**
@@ -42,6 +46,8 @@
 - **Priority:** P0
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/deployment.md` (Section: Development Setup)
 
 **User Story 1.1.4:** As a developer, I need all required dependencies installed so that I can build features
 - **Acceptance Criteria:**
@@ -51,6 +57,8 @@
 - **Priority:** P0
 - **Estimate:** 30 minutes
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/deployment.md` (Section: Dependencies)
 
 ### Feature 1.2: Configuration Management
 
@@ -64,6 +72,9 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: Configuration Management)
+  - `docs/deployment.md` (Section: Environment Variables)
 
 ### Feature 1.3: Database Setup
 
@@ -76,6 +87,8 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: Database Layer)
 
 **User Story 1.3.2:** As a developer, I need database migration management so that schema changes are version controlled
 - **Acceptance Criteria:**
@@ -86,6 +99,9 @@
 - **Priority:** P0
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: Database Migrations)
+  - `docs/deployment.md` (Section: Database Setup)
 
 ---
 
@@ -107,6 +123,8 @@
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Encryption at Rest)
 
 **User Story 2.1.2:** As a user, I need my vault content encrypted with industry-standard encryption so that it cannot be decrypted without my key
 - **Acceptance Criteria:**
@@ -118,6 +136,8 @@
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Encryption at Rest)
 
 **User Story 2.1.3:** As a user, I need tamper detection on my encrypted data so that any modification is detected
 - **Acceptance Criteria:**
@@ -128,6 +148,8 @@
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Encryption at Rest)
 
 **User Story 2.1.4:** As a developer, I need 100% test coverage on encryption so that I'm confident in the security implementation
 - **Acceptance Criteria:**
@@ -141,6 +163,8 @@
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Encryption at Rest)
 
 ### Feature 2.2: JWT Authentication
 
@@ -153,6 +177,8 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: JWT Authentication)
 
 **User Story 2.2.2:** As a developer, I need token validation as a FastAPI dependency so that routes can require authentication
 - **Acceptance Criteria:**
@@ -164,6 +190,8 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: JWT Authentication)
 
 **User Story 2.2.3:** As a user, I need refresh tokens so that I don't have to log in every 30 minutes
 - **Acceptance Criteria:**
@@ -174,6 +202,8 @@
 - **Priority:** P0
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Session Management)
 
 ---
 
@@ -197,6 +227,8 @@
 - **Priority:** P0
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/database_schema.md` (Section: Complete Schema)
 
 **User Story 3.1.2:** As a developer, I need Pydantic schemas for API validation so that requests are validated
 - **Acceptance Criteria:**
@@ -208,6 +240,8 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/database_schema.md` (Section: Complete Schema)
 
 ### Feature 3.2: Initial Migration
 
@@ -222,6 +256,8 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/database_schema.md` (Section: Complete Schema)
 
 ---
 
@@ -242,6 +278,9 @@
 - **Priority:** P0
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: OAuth 2.0 Flows)
+  - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.2:** As a user, when I approve Google OAuth, I want to be redirected back with a session so that I'm logged in
 - **Acceptance Criteria:**
@@ -256,6 +295,9 @@
 - **Priority:** P0
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: OAuth 2.0 Flows)
+  - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.3:** As a user, I want to refresh my access token so that I stay logged in without re-authenticating
 - **Acceptance Criteria:**
@@ -268,6 +310,9 @@
 - **Priority:** P0
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Session Management)
+  - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.4:** As a user, I want to log out so that my session is invalidated
 - **Acceptance Criteria:**
@@ -278,6 +323,8 @@
 - **Priority:** P1
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.5:** As a user, I want to view my profile so that I can see my account information
 - **Acceptance Criteria:**
@@ -287,6 +334,8 @@
 - **Priority:** P1
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 ### Feature 4.2: Authentication Service Layer
 
@@ -300,6 +349,9 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: Service Layer)
+  - `docs/security_architecture.md` (Section: OAuth 2.0 Flows)
 
 ---
 
@@ -322,6 +374,9 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints)
+  - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.2:** As a user, I want to view a specific vault item so that I can read my stored data
 - **Acceptance Criteria:**
@@ -333,6 +388,9 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints)
+  - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.3:** As a user, I want to list my vault items so that I can browse my data
 - **Acceptance Criteria:**
@@ -346,6 +404,9 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints)
+  - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.4:** As a user, I want to update a vault item so that I can modify my stored data
 - **Acceptance Criteria:**
@@ -358,6 +419,9 @@
 - **Priority:** P0
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints)
+  - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.5:** As a user, I want to delete a vault item so that I can remove unwanted data
 - **Acceptance Criteria:**
@@ -370,6 +434,9 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints)
+  - `docs/architecture.md` (Section: Vault Service)
 
 ### Feature 5.2: Vault Service Layer
 
@@ -384,6 +451,8 @@
 - **Priority:** P0
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: Service Layer - Vault Service)
 
 ### Feature 5.3: Tag Management
 
@@ -396,6 +465,8 @@
 - **Priority:** P1
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints - Tags)
 
 **User Story 5.3.2:** As a user, I want to list my tags so that I can see available organization options
 - **Acceptance Criteria:**
@@ -406,6 +477,8 @@
 - **Priority:** P1
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints - Tags)
 
 **User Story 5.3.3:** As a user, I want to rename or delete tags so that I can reorganize my vault
 - **Acceptance Criteria:**
@@ -417,6 +490,8 @@
 - **Priority:** P2
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints - Tags)
 
 **User Story 5.3.4:** As a user, I want to filter vault items by tags so that I can find related content
 - **Acceptance Criteria:**
@@ -426,6 +501,8 @@
 - **Priority:** P1
 - **Estimate:** 2 hours (part of list_items)
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints - Tags)
 
 ### Feature 5.4: File Upload
 
@@ -443,6 +520,9 @@
 - **Priority:** P1
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Vault Endpoints - File Upload)
+  - `docs/architecture.md` (Section: File Upload and Parsing)
 
 ---
 
@@ -467,6 +547,9 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Complete
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: FHIR Integration)
+  - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.1.2:** As a user, when I approve Epic OAuth, I want my tokens stored securely so that the app can sync my data
 - **Acceptance Criteria:**
@@ -486,6 +569,9 @@
 - **Priority:** P0
 - **Estimate:** 6 hours
 - **Status:** In Progress
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: FHIR Integration)
+  - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.1.3:** As a user, I want to disconnect Epic so that my tokens are removed
 - **Acceptance Criteria:**
@@ -497,6 +583,8 @@
 - **Priority:** P1
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 ### Feature 6.2: FHIR Data Sync
 
@@ -516,6 +604,9 @@
 - **Priority:** P0
 - **Estimate:** 8 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: FHIR Integration)
+  - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.2.2:** As a user, I want to manually trigger Epic sync so that I can get the latest data on demand
 - **Acceptance Criteria:**
@@ -527,6 +618,8 @@
 - **Priority:** P1
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.2.3:** As a user, I want to see my Epic sync status so that I know when my data is updated
 - **Acceptance Criteria:**
@@ -537,6 +630,8 @@
 - **Priority:** P1
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 ### Feature 6.3: FHIR Transformations
 
@@ -550,6 +645,8 @@
 - **Priority:** P0
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: FHIR Integration - Transformations)
 
 **User Story 6.3.2:** As a developer, I need Patient resources transformed so that demographic data is stored
 - **Acceptance Criteria:**
@@ -559,6 +656,8 @@
 - **Priority:** P1
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: FHIR Integration - Transformations)
 
 ### Feature 6.4: Token Refresh
 
@@ -574,6 +673,8 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: FHIR Integration - Token Refresh)
 
 ### Feature 6.5: Epic Service Layer
 
@@ -588,6 +689,9 @@
 - **Priority:** P0
 - **Estimate:** 8 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: Service Layer - Epic Service)
+  - `docs/architecture.md` (Section: FHIR Integration)
 
 ---
 
@@ -613,6 +717,9 @@
 - **Priority:** P0
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Ephemeral LLM Containers)
+  - `docs/architecture.md` (Section: LLM Integration)
 
 **User Story 7.1.2:** As a user, I want relevant vault items automatically included in chat context so that the AI has accurate information
 - **Acceptance Criteria:**
@@ -627,6 +734,8 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: LLM Integration - Context Retrieval)
 
 ### Feature 7.2: Ollama Integration
 
@@ -641,6 +750,8 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: LLM Integration - Ollama)
 
 **User Story 7.2.2:** As a user, I want the AI to use my vault data responsibly so that my privacy is maintained
 - **Acceptance Criteria:**
@@ -652,6 +763,8 @@
 - **Priority:** P1
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/security_architecture.md` (Section: Ephemeral LLM Containers)
 
 ### Feature 7.3: Context Retrieval Service
 
@@ -665,6 +778,8 @@
 - **Priority:** P0
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/architecture.md` (Section: LLM Integration - Context Retrieval)
 
 ---
 
@@ -685,6 +800,8 @@
 - **Priority:** P0 - CRITICAL
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: Unit Testing)
 
 **User Story 8.1.2:** As a developer, I need comprehensive tests on JWT authentication so that auth is reliable
 - **Acceptance Criteria:**
@@ -694,6 +811,8 @@
 - **Priority:** P0
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: Unit Testing)
 
 ### Feature 8.2: Integration Tests
 
@@ -706,6 +825,8 @@
 - **Priority:** P0
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: Integration Testing)
 
 **User Story 8.2.2:** As a developer, I need integration tests for Epic API so that OAuth and sync work
 - **Acceptance Criteria:**
@@ -716,6 +837,8 @@
 - **Priority:** P1
 - **Estimate:** 6 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: Integration Testing)
 
 ### Feature 8.3: Test Infrastructure
 
@@ -728,6 +851,8 @@
 - **Priority:** P0
 - **Estimate:** 4 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: Test Infrastructure)
 
 **User Story 8.3.2:** As a developer, I need pytest configuration so that tests run consistently
 - **Acceptance Criteria:**
@@ -738,6 +863,8 @@
 - **Priority:** P0
 - **Estimate:** 1 hour
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: Test Infrastructure)
 
 ### Feature 8.4: CI/CD Pipeline
 
@@ -750,6 +877,8 @@
 - **Priority:** P0
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: CI/CD Pipeline)
 
 **User Story 8.4.2:** As a developer, I need automated tests on every push so that bugs are caught early
 - **Acceptance Criteria:**
@@ -760,6 +889,8 @@
 - **Priority:** P0
 - **Estimate:** 3 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: CI/CD Pipeline)
 
 **User Story 8.4.3:** As a developer, I need security scanning so that vulnerabilities are detected
 - **Acceptance Criteria:**
@@ -769,6 +900,8 @@
 - **Priority:** P1
 - **Estimate:** 2 hours
 - **Status:** Not Started
+- **Reference Docs:**
+  - `docs/testing_strategy.md` (Section: Security Scanning)
 
 ---
 
