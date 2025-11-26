@@ -1,0 +1,130 @@
+version: '3.8'
+
+services:
+  # Backend (FastAPI)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: contextvault-backend
+    ports:
+      - "8000:8000"
+    environment:
+      # Load from .env file
+      - DATABASE_URL=${DATABASE_URL}
+      - APP_SECRET_KEY=${APP_SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}
+      - GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET}
+      - GOOGLE_OAUTH_REDIRECT_URI=${GOOGLE_OAUTH_REDIRECT_URI}
+      - EPIC_CLIENT_ID=${EPIC_CLIENT_ID}
+      - EPIC_REDIRECT_URI=${EPIC_REDIRECT_URI}
+      - EPIC_FHIR_BASE=${EPIC_FHIR_BASE}
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./backend:/app
+      - vault_data:/data
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - redis
+    networks:
+      - contextvault-network
+
+  # Frontend (React + Vite)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: contextvault-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+      - VITE_GOOGLE_OAUTH_CLIENT_ID=${VITE_GOOGLE_OAUTH_CLIENT_ID}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # Prevent overwriting node_modules
+    command: npm run dev -- --host
+    depends_on:
+      - backend
+    networks:
+      - contextvault-network
+
+  # Redis (for caching and background jobs)
+  redis:
+    image: redis:7-alpine
+    container_name: contextvault-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - contextvault-network
+
+  # PostgreSQL (local development only - use Railway for production)
+  # Uncomment if you want a local database instead of Railway
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: contextvault-postgres
+  #   environment:
+  #     POSTGRES_USER: contextvault
+  #     POSTGRES_PASSWORD: dev_password_change_me
+  #     POSTGRES_DB: contextvault_dev
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - contextvault-network
+
+volumes:
+  vault_data:
+    driver: local
+  redis_data:
+    driver: local
+  # postgres_data:
+  #   driver: local
+
+networks:
+  contextvault-network:
+    driver: bridge
+
+# ============================================================================
+# USAGE
+# ============================================================================
+
+# Start all services:
+#   docker-compose up
+
+# Start in background:
+#   docker-compose up -d
+
+# View logs:
+#   docker-compose logs -f
+
+# Stop all services:
+#   docker-compose down
+
+# Rebuild after code changes:
+#   docker-compose up --build
+
+# Clean everything (including volumes):
+#   docker-compose down -v
+
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# 1. Ollama runs separately (not in Docker Compose)
+#    Start with: ollama serve
+#    Backend connects via: host.docker.internal:11434
+
+# 2. Database: Uses Railway Postgres (see DATABASE_URL in .env)
+#    For local development, uncomment the postgres service above
+
+# 3. Frontend HMR (hot module reload) works through volume mount
+
+# 4. Redis is optional for MVP (used for caching and background jobs later)
