@@ -7,15 +7,16 @@
 
 ## Next Steps to Fix Vercel Deployment
 
-### 1. Update Vercel Project Settings
+### 1. Update Vercel Project Settings (CRITICAL)
 
 Go to your Vercel dashboard: https://vercel.com/dashboard
 
 1. **Select your project** (or create new one if needed)
 2. Go to **Settings** → **General**
-3. Under **Root Directory**, set it to: `frontend`
+3. **IMPORTANT**: Under **Root Directory**, click "Edit" and set it to: `frontend`
+   - This is the most critical step - Vercel needs to know where your Next.js app is located
 4. **Framework Preset** should auto-detect as "Next.js" (if not, select it manually)
-5. **Build Command**: Leave as default (Vercel will auto-detect `npm run build`)
+5. **Build Command**: Leave as default (Vercel will auto-detect `npm run build` from the frontend directory)
 6. **Output Directory**: Leave as default (`.next` for Next.js)
 7. **Install Command**: Leave as default (`npm install`)
 
