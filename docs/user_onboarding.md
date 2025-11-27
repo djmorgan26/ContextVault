@@ -391,16 +391,19 @@ Displayed in sidebar until all complete:
 Shown on first visit to each page, dismissible:
 
 **Dashboard:**
+
 - "Click here to upload files like PDFs, medical reports, or images"
 - "Create notes to store preferences, context, or ideas"
 - "Use tags to organize your vault items"
 
 **Chat:**
+
 - "Ask questions about your vault data"
 - "The AI only uses your private data, never shared"
 - "Click the 📎 icon to see which vault items were used"
 
 **Settings:**
+
 - "Connect integrations to automatically sync data"
 - "Change your AI model here if you want a faster or more powerful option"
 
@@ -531,8 +534,9 @@ Settings
 ---
 
 **Next Steps:**
+
 1. Design UI mockups for each screen
-2. Implement onboarding wizard (React components)
+2. Implement onboarding wizard (Next.js client components)
 3. Add empty states to all pages
 4. Create tutorial tooltip system
 5. Test user flow end-to-end

@@ -14,41 +14,49 @@
 ### What We Protect Against
 
 ✅ **Database Breach**
+
 - Vault content encrypted with user-specific keys
 - Even with full database dump, attacker cannot decrypt user data
 - OAuth tokens encrypted, refresh tokens hashed
 
 ✅ **Compromised Backend Server**
+
 - Master keys never stored on server
 - Derived on-demand from user's Google ID + app secret
 - Attacker with server access still cannot decrypt vaults
 
 ✅ **Malicious Administrator**
+
 - Database admin cannot decrypt user data
 - No "master key" or "admin backdoor"
 - User data is truly private
 
 ✅ **Container Escape (LLM)**
+
 - Ephemeral containers with no persistent storage
 - tmpfs mounts (RAM-only, wiped on destruction)
 - Even if attacker escapes container, no data to steal
 
 ✅ **Network Sniffing**
+
 - All communication over HTTPS/TLS 1.3
 - Certificate pinning in mobile apps (future)
 - No sensitive data in URLs or query parameters
 
 ✅ **Token Theft**
+
 - Short-lived access tokens (30 min)
 - Refresh tokens stored hashed (SHA-256)
 - Token rotation on refresh
 
 ✅ **CSRF Attacks**
+
 - State parameter in OAuth flows (cryptographically random)
 - SameSite cookies for session management
 - Double-submit cookie pattern for sensitive operations
 
 ✅ **SQL Injection**
+
 - All queries use parameterized statements (SQLAlchemy ORM)
 - Input validation with Pydantic
 - No raw SQL concatenation
@@ -56,27 +64,33 @@
 ### What We Don't Protect Against (Out of Scope for MVP)
 
 ❌ **Compromised User Device**
+
 - Malware on user's computer could intercept decrypted data
 - Keyloggers could capture credentials
 - Mitigation: Educate users on device security
 
 ❌ **Compromised Google Account**
+
 - Attacker with Google OAuth access can authenticate as user
 - Mitigation: Rely on Google's 2FA, suggest enabling it
 
 ❌ **Insider Threat (Application Developer)**
+
 - Malicious code update could exfiltrate data
 - Mitigation: Code review, open source portions, security audits
 
 ❌ **Quantum Computing Attacks**
+
 - AES-256 currently quantum-resistant but future uncertain
 - Mitigation: Monitor NIST post-quantum standards, plan migration path
 
 ❌ **Physical Server Access**
+
 - Attacker with physical access to Render/Railway servers
 - Mitigation: Trust cloud provider's physical security
 
 ❌ **Side-Channel Attacks**
+
 - Timing attacks, spectre/meltdown on shared hardware
 - Mitigation: Rely on cloud provider's isolation
 
@@ -156,16 +170,19 @@ def derive_master_key(google_id: str, app_secret: str, salt: bytes) -> bytes:
 ```
 
 **Why PBKDF2?**
+
 - Industry standard (NIST recommended)
 - Slow by design (100k iterations) to resist brute force
 - Better than plain hashing (prevents rainbow tables)
 
 **Why 100,000 iterations?**
+
 - OWASP recommends 100k+ for PBKDF2-SHA256
 - Balance between security and performance
 - Takes ~100ms on modern CPU (acceptable UX)
 
 **Salt Storage:**
+
 - 32-byte random salt generated on user creation
 - Stored in `users.encryption_salt` (plain text, not sensitive)
 - Prevents identical keys for users with same Google ID on different instances
@@ -175,6 +192,7 @@ def derive_master_key(google_id: str, app_secret: str, salt: bytes) -> bytes:
 **Algorithm:** AES-256 in Galois/Counter Mode (GCM)
 
 **Why AES-256-GCM?**
+
 - **Confidentiality**: Data is encrypted
 - **Authenticity**: Detects tampering via auth tag
 - **Performance**: Hardware-accelerated (AES-NI)
@@ -256,12 +274,14 @@ def decrypt_content(encrypted_b64: str, master_key: bytes) -> str:
 ```
 
 **Nonce Requirements:**
+
 - MUST be unique for each encryption with same key
 - 96 bits (12 bytes) for GCM
 - Random generation via `os.urandom()` (cryptographically secure)
 - Collision probability negligible (2^96 possible values)
 
 **Auth Tag:**
+
 - 128 bits (16 bytes)
 - Automatically included in `ciphertext_with_tag` by AESGCM
 - Verifies ciphertext integrity and authenticity
@@ -332,6 +352,7 @@ def decrypt_file(encrypted_path: str, master_key: bytes, output_path: str):
 ```
 
 **File Size Considerations:**
+
 - GCM can handle files up to ~64 GB (2^36 - 32 bytes)
 - For MVP, limit uploads to 10 MB
 - Future: Stream encryption/decryption for large files
@@ -375,6 +396,7 @@ def hash_refresh_token(token: str) -> str:
 ```
 
 **Why hash instead of encrypt?**
+
 - Refresh tokens don't need to be decrypted (only validated)
 - Hashing prevents token theft even if database is compromised
 - Following OAuth best practices (RFC 6749)
@@ -455,6 +477,7 @@ def hash_refresh_token(token: str) -> str:
 ```
 
 **Security Controls:**
+
 - **State parameter**: Prevents CSRF attacks
 - **HTTPS only**: Tokens never sent over plain HTTP
 - **Short-lived access token**: 30 minutes (limits exposure)
@@ -543,9 +566,9 @@ def verify_access_token(token: str) -> dict:
 
 ```typescript
 // NEVER store in localStorage (vulnerable to XSS)
-// Store in memory (React state) or HttpOnly cookie
+// Store in memory (Next.js client component state) or HttpOnly cookie
 
-// Option 1: Memory (preferred for SPA)
+// Option 1: Memory (preferred for client components)
 const [accessToken, setAccessToken] = useState<string | null>(null);
 
 // Option 2: HttpOnly cookie (set by backend)
@@ -773,6 +796,7 @@ User's vault data → Backend decrypts → Builds prompt with context
 ```
 
 **Key Points:**
+
 - Vault data never written to container's disk
 - All processing in RAM (tmpfs)
 - Container destroyed after single request
@@ -783,11 +807,13 @@ User's vault data → Backend decrypts → Builds prompt with context
 ### HTTPS/TLS
 
 **Certificate Management:**
+
 - Vercel: Automatic Let's Encrypt certificates
 - Render: Automatic SSL for custom domains
 - Force HTTPS redirects (no plain HTTP)
 
 **TLS Configuration:**
+
 - Minimum TLS 1.2 (prefer TLS 1.3)
 - Strong cipher suites only (no RC4, 3DES)
 - HSTS header: `Strict-Transport-Security: max-age=31536000; includeSubDomains`
@@ -833,6 +859,7 @@ async def chat(request: Request, ...):
 ```
 
 **Limits:**
+
 - Auth endpoints: 10/minute
 - Vault CRUD: 100/minute
 - Chat: 20/minute
@@ -866,6 +893,7 @@ class VaultItemCreate(BaseModel):
 ### Logging Security
 
 **What to Log:**
+
 - Authentication events (login, logout, refresh)
 - Failed authentication attempts
 - Authorization failures (403 errors)
@@ -873,6 +901,7 @@ class VaultItemCreate(BaseModel):
 - Integration sync events
 
 **What NOT to Log:**
+
 - Vault content (encrypted or decrypted)
 - OAuth tokens
 - User passwords or encryption keys
@@ -935,6 +964,7 @@ app.add_middleware(SecurityHeadersMiddleware)
 ### Automated Scanning
 
 **Dependency Scanning:**
+
 ```bash
 # Python
 pip install safety
@@ -945,6 +975,7 @@ npm audit
 ```
 
 **SAST (Static Analysis):**
+
 ```bash
 # Python
 pip install bandit
@@ -957,6 +988,7 @@ npm install --save-dev eslint-plugin-security
 ### Manual Security Review
 
 **Before Production:**
+
 - [ ] All secrets in environment variables (not hardcoded)
 - [ ] Database credentials rotated from defaults
 - [ ] OAuth redirect URIs whitelisted
@@ -974,12 +1006,14 @@ npm install --save-dev eslint-plugin-security
 ### Penetration Testing (Future)
 
 **Recommended Tools:**
+
 - OWASP ZAP (automated vulnerability scanning)
 - Burp Suite (manual testing)
 - SQLMap (SQL injection)
 - Nmap (network scanning)
 
 **Scope:**
+
 - API authentication bypass
 - Authorization flaws (access other users' data)
 - Container escape attempts
@@ -992,17 +1026,20 @@ npm install --save-dev eslint-plugin-security
 ### Security Incident Classification
 
 **Critical (P0):**
+
 - Database breach with encrypted data exposed
 - OAuth token theft
 - Container escape with data exfiltration
 - Authentication bypass
 
 **High (P1):**
+
 - Denial of service attack
 - Rate limiting bypass
 - Failed login brute force
 
 **Medium (P2):**
+
 - Suspicious API usage patterns
 - Integration errors
 - Failed container cleanup
@@ -1010,29 +1047,34 @@ npm install --save-dev eslint-plugin-security
 ### Response Procedure
 
 **1. Detection:**
+
 - Monitor logs for anomalies (use Sentry or similar)
 - Set up alerts for failed auth attempts (>10/minute)
 - Monitor container lifecycle (orphaned containers)
 
 **2. Containment:**
+
 - Revoke compromised OAuth tokens
 - Invalidate all user sessions (force re-login)
 - Block suspicious IP addresses
 - Take affected services offline if needed
 
 **3. Investigation:**
+
 - Review access logs
 - Identify affected users
 - Determine attack vector
 - Assess data exposure
 
 **4. Recovery:**
+
 - Patch vulnerability
 - Rotate secrets (app secret, database password)
 - Notify affected users
 - Restore from backup if needed
 
 **5. Post-Mortem:**
+
 - Document incident timeline
 - Implement additional controls
 - Update threat model
@@ -1043,6 +1085,7 @@ npm install --save-dev eslint-plugin-security
 ### GDPR (General Data Protection Regulation)
 
 **User Rights:**
+
 - ✅ Right to access: `GET /api/vault/export`
 - ✅ Right to deletion: `DELETE /api/auth/me?delete_all=true`
 - ✅ Right to portability: JSON export of all data
@@ -1052,19 +1095,21 @@ npm install --save-dev eslint-plugin-security
 ### HIPAA (Health Insurance Portability and Accountability Act)
 
 **Requirements for Epic Integration:**
+
 - ✅ Encryption at rest (vault items, OAuth tokens)
 - ✅ Encryption in transit (HTTPS)
 - ✅ Access controls (authentication + authorization)
 - ✅ Audit logging (all data access logged)
 - ✅ Data integrity (AES-GCM auth tags)
-- ⚠️  Business Associate Agreement (BAA) with Epic
-- ⚠️  BAA with hosting providers (Render, Railway)
+- ⚠️ Business Associate Agreement (BAA) with Epic
+- ⚠️ BAA with hosting providers (Render, Railway)
 
 **Note:** Full HIPAA compliance requires legal review and formal BAAs. MVP may not be HIPAA-compliant until these are in place.
 
 ### SOC 2 (Future)
 
 **Security Controls:**
+
 - Access control (authentication, authorization)
 - Change management (git, code review)
 - Risk management (threat model, incident response)
@@ -1073,6 +1118,7 @@ npm install --save-dev eslint-plugin-security
 ## Security Roadmap
 
 ### MVP (Phase 1)
+
 - ✅ Google OAuth authentication
 - ✅ AES-256-GCM encryption
 - ✅ PBKDF2 key derivation
@@ -1082,6 +1128,7 @@ npm install --save-dev eslint-plugin-security
 - ✅ Rate limiting
 
 ### Phase 2
+
 - End-to-end encryption (zero-knowledge)
 - Hardware security key support (WebAuthn)
 - Audit logs (user-visible)
@@ -1089,6 +1136,7 @@ npm install --save-dev eslint-plugin-security
 - Automated secret rotation
 
 ### Phase 3
+
 - SOC 2 certification
 - Penetration testing
 - Bug bounty program
@@ -1098,6 +1146,7 @@ npm install --save-dev eslint-plugin-security
 ---
 
 **Next Steps:**
+
 1. Implement encryption service (see code examples above)
 2. Set up Google OAuth (credentials ready)
 3. Configure Docker container security

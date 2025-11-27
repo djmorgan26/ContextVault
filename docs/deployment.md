@@ -24,12 +24,14 @@ contextvault.vercel.app       contextvault-api.onrender.com       Postgres Ohio
 ## Database Setup (Railway) ✅
 
 **Already configured:**
+
 - Service: context-vault-postgres
 - Database: contextvaultdb
 - User: [Your database user]
 - External URL: `postgresql://user:password@host:5432/database_name`
 
 **To run migrations:**
+
 ```bash
 cd backend
 export DATABASE_URL="postgresql://user:password@host:5432/database_name"
@@ -105,10 +107,10 @@ Click "Create Web Service" → Render builds and deploys automatically.
 1. Go to https://vercel.com/new
 2. Import `djmorgan26/ContextVault`
 3. Configure:
-   - **Framework Preset**: Vite
+   - **Framework Preset**: Next.js
    - **Root Directory**: `frontend`
    - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
+   - **Output Directory**: `.next`
    - **Install Command**: `npm install`
 
 ### 2. Environment Variables
@@ -116,8 +118,8 @@ Click "Create Web Service" → Render builds and deploys automatically.
 Add in Vercel dashboard:
 
 ```bash
-VITE_API_BASE_URL=https://contextvault-api.onrender.com
-VITE_GOOGLE_OAUTH_CLIENT_ID=your-client-id.apps.googleusercontent.com
+NEXT_PUBLIC_API_BASE_URL=https://contextvault-api.onrender.com
+NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID=your-client-id.apps.googleusercontent.com
 ```
 
 ### 3. Deploy
@@ -129,6 +131,7 @@ Click "Deploy" → Vercel builds and deploys automatically.
 ### 4. Update Google OAuth Redirect URIs
 
 Go back to Google Cloud Console and add production URLs:
+
 - https://contextvault-api.onrender.com/api/auth/google/callback
 - https://contextvault.vercel.app (authorized JavaScript origin)
 
@@ -152,6 +155,7 @@ Deployments live!
 ### Deployment Checklist
 
 Before merging to main:
+
 - [ ] All tests pass locally
 - [ ] No console errors in frontend
 - [ ] Backend health check works
@@ -177,6 +181,7 @@ alembic current
 ```
 
 **Rollback if needed:**
+
 ```bash
 alembic downgrade -1  # Go back one migration
 ```
@@ -190,6 +195,7 @@ alembic downgrade -1  # Go back one migration
 View in dashboard: https://dashboard.render.com/web/YOUR_SERVICE/logs
 
 **Or via CLI:**
+
 ```bash
 npm install -g render-cli
 render login
@@ -205,6 +211,7 @@ View in dashboard: https://vercel.com/YOUR_PROJECT/deployments
 View in dashboard: https://railway.app/project/YOUR_PROJECT
 
 Metrics:
+
 - CPU usage
 - Memory usage
 - Connection count
@@ -217,10 +224,12 @@ Metrics:
 ### Render Free Tier Limitations
 
 **Cold Starts:**
+
 - Service spins down after 15 minutes of inactivity
 - First request takes ~30 seconds to wake up
 
 **Solution:**
+
 - Upgrade to paid plan ($7/mo for always-on)
 - Or: Use cron-job.org to ping `/health` every 10 minutes
 
@@ -228,21 +237,7 @@ Metrics:
 
 Add cache headers for static assets:
 
-```typescript
-// vite.config.ts
-export default defineConfig({
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu']
-        }
-      }
-    }
-  }
-});
-```
+Next.js automatically code-splits routes and components. For additional control, configure dynamic imports or route segment caching in `next.config.mjs` as needed.
 
 ### Database Connection Pooling
 
@@ -270,12 +265,14 @@ engine = create_engine(
 ### Secrets Management
 
 **Never commit to git:**
+
 - `APP_SECRET_KEY`
 - `JWT_SECRET_KEY`
 - `GOOGLE_OAUTH_CLIENT_SECRET`
 - `DATABASE_URL` password
 
 **Rotate secrets:**
+
 - Annually: `APP_SECRET_KEY`, `JWT_SECRET_KEY`
 - After breach: Immediately
 - On team member departure: Within 24 hours
@@ -283,6 +280,7 @@ engine = create_engine(
 ### Rate Limiting
 
 Already configured in backend (see `api_endpoints.md`):
+
 - 10 req/min for auth endpoints
 - 100 req/min for vault
 - 20 req/min for chat
@@ -290,6 +288,7 @@ Already configured in backend (see `api_endpoints.md`):
 ### CORS
 
 Only allow production frontend:
+
 ```python
 allow_origins=["https://contextvault.vercel.app"]
 ```
@@ -301,11 +300,13 @@ allow_origins=["https://contextvault.vercel.app"]
 ### Database Backups
 
 Railway provides automated backups:
+
 - Frequency: Daily
 - Retention: 7 days (free tier)
 - Manual backup: Export via CLI
 
 **Manual backup:**
+
 ```bash
 pg_dump -h your-db-host \
         -U your-db-user \
@@ -315,6 +316,7 @@ pg_dump -h your-db-host \
 ```
 
 **Restore:**
+
 ```bash
 pg_restore -h your-db-host \
            -U your-db-user \
@@ -350,6 +352,7 @@ Total: $0/mo
 ```
 
 **Limitations:**
+
 - Cold starts (~30s)
 - 1GB database storage
 - No real-time features
@@ -365,6 +368,7 @@ Total: ~$50/mo
 ```
 
 **Improvements:**
+
 - No cold starts
 - More database storage
 - Better support
@@ -380,6 +384,7 @@ Total: ~$250/mo
 ```
 
 **Features:**
+
 - Horizontal scaling
 - Read replicas for performance
 - Redis caching
@@ -392,11 +397,13 @@ Total: ~$250/mo
 ### Backend won't start
 
 **Check logs:**
+
 ```bash
 render logs contextvault-api --tail
 ```
 
 **Common issues:**
+
 - Missing environment variable (check Render dashboard)
 - Database connection failed (verify DATABASE_URL)
 - Port binding error (Render sets $PORT automatically, use it)
@@ -404,6 +411,7 @@ render logs contextvault-api --tail
 ### Frontend shows API errors
 
 **Check:**
+
 1. Backend is running: `curl https://contextvault-api.onrender.com/health`
 2. CORS configured: Backend allows `contextvault.vercel.app`
 3. API URL correct: Check `VITE_API_BASE_URL` in Vercel
@@ -411,11 +419,13 @@ render logs contextvault-api --tail
 ### Database connection timeout
 
 **Causes:**
+
 - Too many connections (check Railway metrics)
 - SSL mode wrong (must be `require` for Railway)
 - Firewall blocking (Railway is public, shouldn't block)
 
 **Fix:**
+
 ```python
 # Add to DATABASE_URL
 DATABASE_URL=postgresql://...?sslmode=require
@@ -450,6 +460,7 @@ pg_dump -h your-db-host -U your-db-user your-database-name > backup.sql
 ---
 
 **Next Steps:**
+
 1. Deploy backend to Render
 2. Deploy frontend to Vercel
 3. Run database migrations

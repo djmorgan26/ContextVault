@@ -27,6 +27,7 @@
 ### Backend (Python + pytest)
 
 **Scope:**
+
 - Encryption/decryption functions
 - Key derivation
 - Token generation/validation
@@ -75,15 +76,17 @@ def test_key_derivation_different_for_different_users():
 ```
 
 **Run:**
+
 ```bash
 cd backend
 pytest tests/ --cov=app --cov-report=html
 ```
 
-### Frontend (TypeScript + Vitest + React Testing Library)
+### Frontend (Next.js + Vitest + React Testing Library)
 
 **Scope:**
-- React components (render tests)
+
+- Next.js client/server components (render tests)
 - Custom hooks
 - Utility functions
 - API client
@@ -92,13 +95,13 @@ pytest tests/ --cov=app --cov-report=html
 
 ```typescript
 // src/components/VaultDashboard.test.tsx
-import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import VaultDashboard from './VaultDashboard';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { render, screen, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import VaultDashboard from "./VaultDashboard";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-describe('VaultDashboard', () => {
-  it('shows empty state when no items', async () => {
+describe("VaultDashboard", () => {
+  it("shows empty state when no items", async () => {
     const queryClient = new QueryClient();
 
     render(
@@ -112,26 +115,28 @@ describe('VaultDashboard', () => {
     });
   });
 
-  it('displays vault items when present', async () => {
+  it("displays vault items when present", async () => {
     // Mock API response
-    vi.mock('../lib/api', () => ({
-      getVaultItems: () => Promise.resolve({
-        items: [
-          { id: '1', title: 'Test Note', type: 'note', tags: ['test'] }
-        ]
-      })
+    vi.mock("../lib/api", () => ({
+      getVaultItems: () =>
+        Promise.resolve({
+          items: [
+            { id: "1", title: "Test Note", type: "note", tags: ["test"] },
+          ],
+        }),
     }));
 
     render(<VaultDashboard />);
 
     await waitFor(() => {
-      expect(screen.getByText('Test Note')).toBeInTheDocument();
+      expect(screen.getByText("Test Note")).toBeInTheDocument();
     });
   });
 });
 ```
 
 **Run:**
+
 ```bash
 cd frontend
 npm run test
@@ -144,6 +149,7 @@ npm run test
 ### Backend API Tests (pytest + httpx)
 
 **Scope:**
+
 - Full API endpoints with database
 - Authentication flow
 - Vault CRUD operations
@@ -234,6 +240,7 @@ def auth_headers(test_user):
 ### Playwright (Critical User Flows)
 
 **Scope:**
+
 - Google OAuth login
 - Upload file → Chat about it
 - Epic connection → View medical data
@@ -243,56 +250,67 @@ def auth_headers(test_user):
 
 ```typescript
 // e2e/critical-flows.spec.ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Critical User Flows', () => {
-  test('Upload file and chat about it', async ({ page }) => {
+test.describe("Critical User Flows", () => {
+  test("Upload file and chat about it", async ({ page }) => {
     // Login (mock OAuth for testing)
-    await page.goto('http://localhost:5173');
-    await page.click('text=Sign in with Google');
+    await page.goto("http://localhost:5173");
+    await page.click("text=Sign in with Google");
     // ... mock OAuth flow ...
 
     // Upload file
-    await page.click('text=Upload File');
-    await page.setInputFiles('input[type="file"]', './test-data/medical_report.pdf');
-    await expect(page.locator('text=File uploaded')).toBeVisible();
+    await page.click("text=Upload File");
+    await page.setInputFiles(
+      'input[type="file"]',
+      "./test-data/medical_report.pdf"
+    );
+    await expect(page.locator("text=File uploaded")).toBeVisible();
 
     // Navigate to chat
-    await page.click('text=Chat');
+    await page.click("text=Chat");
 
     // Ask about uploaded file
-    await page.fill('textarea[placeholder*="message"]', 'Summarize my medical report');
-    await page.press('textarea', 'Enter');
+    await page.fill(
+      'textarea[placeholder*="message"]',
+      "Summarize my medical report"
+    );
+    await page.press("textarea", "Enter");
 
     // Wait for AI response
-    await expect(page.locator('text=Based on your medical report')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator("text=Based on your medical report")).toBeVisible(
+      { timeout: 10000 }
+    );
 
     // Verify context indicator
-    await expect(page.locator('text=Used 1 vault item')).toBeVisible();
+    await expect(page.locator("text=Used 1 vault item")).toBeVisible();
   });
 
-  test('Epic integration flow', async ({ page }) => {
+  test("Epic integration flow", async ({ page }) => {
     // Login
-    await page.goto('http://localhost:5173/settings');
+    await page.goto("http://localhost:5173/settings");
 
     // Connect Epic
-    await page.click('text=Connect Epic MyChart');
+    await page.click("text=Connect Epic MyChart");
     await page.click('button:has-text("Connect Epic MyChart")');
 
     // Mock Epic OAuth (in real test, use Epic sandbox)
     // ...
 
     // Verify connection
-    await expect(page.locator('text=Epic MyChart: Connected')).toBeVisible();
+    await expect(page.locator("text=Epic MyChart: Connected")).toBeVisible();
 
     // Check vault for synced items
-    await page.goto('http://localhost:5173/vault');
-    await expect(page.locator('[data-source="epic"]')).toHaveCount(/* expected count */);
+    await page.goto("http://localhost:5173/vault");
+    await expect(
+      page.locator('[data-source="epic"]')
+    ).toHaveCount(/* expected count */);
   });
 });
 ```
 
 **Run:**
+
 ```bash
 npx playwright test
 ```
@@ -304,12 +322,14 @@ npx playwright test
 ### Pre-Release (Before Each Deploy)
 
 **Authentication:**
+
 - [ ] Google OAuth login works (dev and prod)
 - [ ] Access token refresh works
 - [ ] Logout clears session
 - [ ] Expired token shows login prompt
 
 **Vault Operations:**
+
 - [ ] Upload PDF file (extract text works)
 - [ ] Upload image (OCR works if implemented)
 - [ ] Create note with markdown
@@ -320,6 +340,7 @@ npx playwright test
 - [ ] Pagination works (51+ items)
 
 **Chat:**
+
 - [ ] Chat with empty vault (graceful handling)
 - [ ] Chat about vault data (context retrieval works)
 - [ ] Streaming response works
@@ -327,24 +348,28 @@ npx playwright test
 - [ ] Error handling (Ollama down)
 
 **Integrations:**
+
 - [ ] Epic OAuth flow completes
 - [ ] Epic sync retrieves records
 - [ ] Epic data appears in vault
 - [ ] Epic disconnect removes tokens
 
 **Security:**
+
 - [ ] Cannot access other users' vault items (try guessing IDs)
 - [ ] SQL injection attempts fail (try in search)
 - [ ] XSS attempts sanitized (try in note content)
 - [ ] Rate limiting works (spam requests)
 
 **Mobile (PWA):**
+
 - [ ] Responsive on iPhone (Safari)
 - [ ] Responsive on Android (Chrome)
 - [ ] PWA install prompt appears
 - [ ] Offline vault viewing works
 
 **Performance:**
+
 - [ ] First contentful paint < 2s
 - [ ] Chat first token < 3s
 - [ ] File upload (5MB) < 5s
@@ -394,12 +419,14 @@ class ContextVaultUser(HttpUser):
 ```
 
 **Run:**
+
 ```bash
 locust -f locustfile.py --host=http://localhost:8000
 # Open http://localhost:8089, set users=100
 ```
 
 **Targets:**
+
 - 100 concurrent users
 - Median response time < 500ms
 - 95th percentile < 2s
@@ -412,6 +439,7 @@ locust -f locustfile.py --host=http://localhost:8000
 ### Automated Scans
 
 **Dependency Vulnerabilities:**
+
 ```bash
 # Python
 pip install safety
@@ -423,6 +451,7 @@ npm audit fix
 ```
 
 **SAST (Static Analysis):**
+
 ```bash
 # Python
 pip install bandit
@@ -436,20 +465,24 @@ eslint src/ --ext .ts,.tsx
 ### Manual Security Tests
 
 **Authentication:**
+
 - [ ] Try accessing API without token (expect 401)
 - [ ] Try using expired token (expect 401)
 - [ ] Try using another user's token (expect 403)
 
 **Authorization:**
+
 - [ ] Try accessing vault item with guessed ID (expect 404)
 - [ ] Try modifying another user's item (expect 403/404)
 
 **Injection:**
+
 - [ ] SQL injection in search: `'; DROP TABLE users; --`
 - [ ] XSS in note content: `<script>alert('xss')</script>`
 - [ ] Path traversal in file upload: `../../../etc/passwd`
 
 **Cryptography:**
+
 - [ ] Verify encrypted data in database is not readable
 - [ ] Verify decryption with wrong key fails
 - [ ] Verify token replay attack prevented
@@ -482,7 +515,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -506,7 +539,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
         run: |
@@ -592,6 +625,7 @@ if __name__ == "__main__":
 ```
 
 **Run:**
+
 ```bash
 cd backend
 python scripts/seed_db.py
@@ -602,12 +636,14 @@ python scripts/seed_db.py
 ## Testing Timeline
 
 ### Phase 1 (MVP)
+
 - Week 1-2: Set up testing infrastructure (pytest, vitest, playwright)
 - Week 3-6: Write tests alongside features (TDD where possible)
 - Week 7: E2E tests for critical flows
 - Week 8: Security testing and load testing
 
 ### Ongoing
+
 - Every PR: Run unit + integration tests (CI)
 - Every deploy: Run E2E tests (staging)
 - Weekly: Manual smoke tests (production)
@@ -616,6 +652,7 @@ python scripts/seed_db.py
 ---
 
 **Next Steps:**
+
 1. Set up pytest and vitest
 2. Write tests for encryption service first (critical)
 3. Add tests to CI/CD pipeline

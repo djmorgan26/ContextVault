@@ -10,7 +10,7 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 ┌─────────────────────────────────────────────────────────────┐
 │                     User's Browser                          │
 │  ┌───────────────────────────────────────────────────────┐ │
-│  │  React Frontend (Vercel)                              │ │
+│  │  Next.js Frontend (Vercel)                            │ │
 │  │  - shadcn/ui components                               │ │
 │  │  - Client-side encryption for vault data              │ │
 │  │  - PWA for mobile access                              │ │
@@ -34,7 +34,7 @@ Context Vault is a privacy-first personal intelligence system that combines secu
         ▼                ▼                ▼
 ┌───────────────┐ ┌─────────────┐ ┌──────────────────┐
 │   PostgreSQL  │ │   Ollama    │ │  File Storage    │
-│   (Railway)   │ │  (Ephemeral │ │  (Encrypted S3   │
+│  (Supabase)   │ │  (Ephemeral │ │  (Encrypted S3   │
 │               │ │  Containers)│ │   or Local)      │
 │  Encrypted    │ │  RAM-only   │ │  Per-user keys   │
 │  vault items  │ │  No persist │ │  AES-256-GCM     │
@@ -43,17 +43,20 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 
 ## Core Components
 
-### 1. Frontend (React + Vite)
+### 1. Frontend (Next.js)
 
 **Technology Stack:**
-- React 18+ with TypeScript
-- Vite for build tooling
+
+- Next.js 14+ (App Router) with TypeScript
+- Hybrid Server & Client Components
 - shadcn/ui component library
 - TailwindCSS for styling
-- Zustand or React Context for state
-- React Query for API data fetching
+- Next.js Route Handlers for API proxying when needed
+- Next Auth or custom auth context for session management
+- React Query / TanStack Query for API data fetching
 
 **Key Features:**
+
 - Responsive design (desktop, tablet, mobile)
 - Progressive Web App (PWA) capabilities
 - Client-side encryption helpers
@@ -61,6 +64,7 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 - Real-time chat interface with streaming
 
 **Deployment:** Vercel (free tier)
+
 - URL: `contextvault.vercel.app`
 - Auto-deploy from `main` branch
 - Environment variables managed in Vercel dashboard
@@ -68,6 +72,7 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 ### 2. Backend (FastAPI)
 
 **Technology Stack:**
+
 - FastAPI (Python 3.11+)
 - SQLAlchemy 2.0 (ORM)
 - Alembic (migrations)
@@ -79,12 +84,14 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 **Core Services:**
 
 **Authentication Service:**
+
 - Google OAuth 2.0 flow
 - JWT access tokens (30 min expiry)
 - Refresh tokens (30 day expiry)
 - Session management
 
 **Vault Service:**
+
 - CRUD operations on vault items
 - Tag-based organization
 - Full-text search
@@ -92,24 +99,28 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 - Encryption/decryption layer
 
 **Integration Services:**
+
 - Epic SMART on FHIR OAuth + data sync
 - Fitbit OAuth + API polling
 - Apple Health XML parser
 
 **Ephemeral LLM Service:**
+
 - Docker container orchestration
 - Context retrieval from vault
 - Streaming chat responses
 - Container lifecycle management
 
 **Deployment:** Render (free tier)
+
 - URL: `contextvault-api.onrender.com`
 - Auto-deploy from `main` branch
 - Spins down after inactivity (cold starts ~30s)
 
-### 3. Database (PostgreSQL on Railway)
+### 3. Database (PostgreSQL on Supabase)
 
 **Schema Overview:**
+
 - `users` - Authentication and encryption keys
 - `vault_items` - Encrypted user data
 - `tags` - User-defined categories
@@ -119,14 +130,16 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 - `sessions` - Refresh token tracking
 
 **Encryption Strategy:**
+
 - Database connection over SSL
 - Sensitive fields encrypted at application layer
 - Per-user encryption keys derived from Google ID + app secret
 
 **Connection:**
-- External URL for backend: `dpg-d4j00bvgi27c73eto9j0-a.ohio-postgres.render.com:5432`
-- SSL mode: `require`
-- Connection pooling via SQLAlchemy
+
+- External URL for backend: `postgresql://<user>:<password>@<project>.supabase.co:6543/postgres`
+- SSL mode: `require` (Supabase-managed certificates)
+- Connection pooling via SQLAlchemy or Supabase PgBouncer
 
 ### 4. Ephemeral LLM Containers (Ollama)
 
@@ -135,6 +148,7 @@ Context Vault is a privacy-first personal intelligence system that combines secu
 The key innovation: **vault data never persists in LLM containers**.
 
 **Container Lifecycle:**
+
 ```
 User sends message
     ↓
@@ -156,12 +170,14 @@ Destroy container immediately (all RAM wiped)
 **Implementation Options:**
 
 **Option A: Pure Ephemeral (Maximum Privacy)**
+
 - New container per request
 - Lifetime: 3-5 seconds
 - Pros: Zero data persistence risk
 - Cons: Slower (~2-5s first token)
 
 **Option B: Container Pool (Balanced) - RECOMMENDED FOR MVP**
+
 - Maintain 2-3 warm containers
 - Rotate/destroy every 10 requests
 - Lifetime: ~10 minutes max per container
@@ -169,6 +185,7 @@ Destroy container immediately (all RAM wiped)
 - Cons: Slightly higher memory footprint
 
 **Technical Specs:**
+
 - Base image: `ollama/ollama:latest`
 - Default model: `llama3.1:8b` (4.9GB)
 - Memory limit: 4GB per container
@@ -178,11 +195,13 @@ Destroy container immediately (all RAM wiped)
 ### 5. File Storage
 
 **MVP: Local Filesystem**
+
 - Path: `/data/uploads/{user_id}/{file_id}.enc`
 - Encryption: AES-256-GCM with per-user keys
 - Metadata in database
 
 **Production: Encrypted S3/R2**
+
 - Cloudflare R2 (S3-compatible, cheaper egress)
 - Files encrypted before upload
 - Pre-signed URLs for download (decrypted client-side)
@@ -272,20 +291,24 @@ Destroy container immediately (all RAM wiped)
 ### Encryption Layers
 
 **Layer 1: Transport (TLS)**
+
 - All communication over HTTPS
 - Certificate managed by Vercel/Render
 
 **Layer 2: Database Connection**
+
 - PostgreSQL SSL mode: require
 - Encrypted connection to Railway
 
 **Layer 3: Application-Level Encryption**
+
 - Vault item content: AES-256-GCM
 - OAuth tokens: AES-256-GCM
 - Files: AES-256-GCM
 - Key derivation: PBKDF2 with 100k iterations
 
 **Layer 4: Ephemeral Containers**
+
 - No disk writes (tmpfs only)
 - Containers destroyed after use
 - No logging of vault content
@@ -293,6 +316,7 @@ Destroy container immediately (all RAM wiped)
 ### Key Management
 
 **User Master Key:**
+
 ```python
 # Derived per-user, never stored directly
 master_key = PBKDF2(
@@ -305,6 +329,7 @@ master_key = PBKDF2(
 ```
 
 **Per-Item Encryption:**
+
 - Each vault item encrypted with unique nonce
 - AES-256-GCM (authenticated encryption)
 - Format: `nonce (12 bytes) || ciphertext || auth_tag (16 bytes)`
@@ -312,6 +337,7 @@ master_key = PBKDF2(
 ### Threat Model
 
 **What we protect against:**
+
 - ✅ Compromised backend server (data encrypted, attacker can't decrypt)
 - ✅ Malicious admin (no access to user encryption keys)
 - ✅ Database breach (encrypted vault items useless without keys)
@@ -319,6 +345,7 @@ master_key = PBKDF2(
 - ✅ Network sniffing (TLS everywhere)
 
 **What we don't protect against (out of scope for MVP):**
+
 - ❌ Compromised user device (client-side malware could intercept)
 - ❌ Compromised Google account (attacker could OAuth in as user)
 - ❌ Quantum computing attacks (AES-256 is quantum-resistant for now)
@@ -328,11 +355,13 @@ master_key = PBKDF2(
 ### MVP (0-1000 users)
 
 **Current Setup:**
+
 - Render free tier: 512MB RAM, spins down after inactivity
-- Railway free tier: Shared Postgres (1GB storage)
+- Database: Supabase free tier: Managed Postgres (500MB storage)
 - Ollama: User's local machine or single hosted instance
 
 **Bottlenecks:**
+
 - Render cold starts (~30s)
 - Single Ollama instance (can't handle concurrent users)
 - No CDN for frontend assets
@@ -340,8 +369,9 @@ master_key = PBKDF2(
 ### Phase 2 (1000-10,000 users)
 
 **Upgrades:**
+
 - Render: Upgrade to $7/mo plan (always-on, 512MB → 2GB RAM)
-- Railway: Upgrade to $5/mo (dedicated Postgres, 1GB → 8GB storage)
+- Supabase: Upgrade to Pro (8GB+ storage, higher throughput)
 - Ollama: Container pool with 5-10 warm containers
 - Redis: Add caching layer for vault search
 - CDN: Cloudflare in front of Vercel
@@ -349,6 +379,7 @@ master_key = PBKDF2(
 ### Phase 3 (10,000+ users)
 
 **Architecture Changes:**
+
 - Backend: Horizontal scaling with load balancer
 - Database: Read replicas for vault queries
 - Ollama: Kubernetes cluster with auto-scaling
@@ -358,6 +389,7 @@ master_key = PBKDF2(
 ## Technology Choices - Rationale
 
 ### Why FastAPI?
+
 - Best-in-class async support (critical for streaming chat)
 - Automatic OpenAPI docs
 - Pydantic validation (type safety)
@@ -365,13 +397,15 @@ master_key = PBKDF2(
 - Existing Epic integration code already uses it
 
 ### Why PostgreSQL over SQLite?
-- Render/Railway offer free hosted Postgres (easier deployment)
+
+- Supabase (or Render add-on) offers managed Postgres with generous free tier
 - Better concurrency handling
 - Full-text search built-in
 - JSON column support for flexible metadata
 - Migration path for scaling
 
 ### Why Ollama over llama.cpp?
+
 - Simpler API (REST instead of bindings)
 - Model management built-in
 - Better documentation
@@ -379,6 +413,7 @@ master_key = PBKDF2(
 - Multi-model support
 
 ### Why shadcn/ui over Material-UI?
+
 - Modern, professional aesthetic
 - Headless + customizable
 - TailwindCSS integration
@@ -386,6 +421,7 @@ master_key = PBKDF2(
 - Active development
 
 ### Why Vercel over Netlify?
+
 - Better Next.js support (future migration path)
 - Edge functions (faster cold starts)
 - Superior developer experience
@@ -397,7 +433,7 @@ master_key = PBKDF2(
 
 ```bash
 # Frontend
-cd frontend && npm run dev  # http://localhost:5173
+cd frontend && npm run dev  # http://localhost:3000
 
 # Backend
 cd backend && source venv/bin/activate
@@ -407,32 +443,34 @@ uvicorn app.main:app --reload  # http://localhost:8000
 ollama serve  # http://localhost:11434
 
 # Database
-# Uses Railway hosted Postgres (no local setup needed)
+# Uses Supabase hosted Postgres (no local setup needed)
 ```
 
 ### Staging (Future)
 
 - Frontend: Vercel preview deployments (auto per PR)
 - Backend: Render preview instances
-- Database: Separate Railway database
+- Database: Separate Supabase project
 
 ### Production
 
 - Frontend: `contextvault.vercel.app`
 - Backend: `contextvault-api.onrender.com`
-- Database: Railway Postgres (Ohio region)
+- Database: Supabase Postgres (Region TBD)
 
 ## Monitoring & Observability
 
 ### Logging
 
 **Backend:**
+
 - Structured JSON logs via `structlog`
 - Log levels: DEBUG (dev), INFO (prod)
 - NO logging of vault content or sensitive data
 - Redact: tokens, encryption keys, user data
 
 **Frontend:**
+
 - Console errors in dev
 - Production: Silent (no console logs)
 
@@ -455,14 +493,17 @@ ollama serve  # http://localhost:11434
 ### Backup Strategy
 
 **Database:**
-- Railway automated daily backups (7 day retention)
+
+- Supabase automated daily backups (7 day retention on free tier)
 - Manual export script: `pg_dump` to S3 weekly
 
 **Files:**
+
 - Encrypted files in S3 (versioning enabled)
 - Cross-region replication (future)
 
 **User Data Export:**
+
 - API endpoint: `GET /api/vault/export`
 - Returns JSON of all vault items (decrypted)
 - User-initiated only (GDPR compliance)
@@ -470,16 +511,19 @@ ollama serve  # http://localhost:11434
 ### Recovery Scenarios
 
 **Database Corruption:**
-1. Restore from Railway backup
-2. Point app to restored instance
+
+1. Restore from Supabase backup snapshot
+2. Point app to restored instance (or promote replica)
 3. Verify data integrity
 
 **Backend Deployment Failure:**
+
 1. Render auto-rollback to previous version
 2. Manual rollback via Render dashboard
 3. Fix issue, redeploy
 
 **Ollama Service Outage:**
+
 1. Chat feature temporarily unavailable
 2. Vault access still works
 3. Fallback: Show "AI temporarily unavailable" message
@@ -507,6 +551,7 @@ This architecture prioritizes **privacy, simplicity, and developer velocity** fo
 ---
 
 **Next Steps:**
+
 1. Review database schema (see `database_schema.md`)
 2. Review API endpoints (see `api_endpoints.md`)
 3. Set up local development environment (see `setup_guide.md`)

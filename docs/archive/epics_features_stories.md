@@ -14,6 +14,7 @@
 ### Feature 1.1: Project Structure & Tooling
 
 **User Story 1.1.1:** As a developer, I need a well-organized backend directory structure so that code is maintainable and follows best practices
+
 - **Acceptance Criteria:**
   - Backend directory with app/, models/, schemas/, services/, api/, core/ structure
   - migrations/ directory for Alembic
@@ -26,6 +27,7 @@
   - `docs/architecture.md` (Section: Backend Structure)
 
 **User Story 1.1.2:** As a developer, I need automated code formatting and linting so that code quality is consistent
+
 - **Acceptance Criteria:**
   - `pyproject.toml` with Ruff configuration (100 char line length)
   - Pre-commit hooks configured to auto-format on commit
@@ -38,6 +40,7 @@
   - `docs/deployment.md` (Section: Development Setup)
 
 **User Story 1.1.3:** As a developer, I need a convenient way to run common tasks so that development is efficient
+
 - **Acceptance Criteria:**
   - Makefile with commands: install, dev, test, lint, format, migrate
   - `make dev` starts uvicorn with hot reload
@@ -50,6 +53,7 @@
   - `docs/deployment.md` (Section: Development Setup)
 
 **User Story 1.1.4:** As a developer, I need all required dependencies installed so that I can build features
+
 - **Acceptance Criteria:**
   - `requirements.txt` includes: fastapi, sqlalchemy, alembic, pydantic, cryptography, httpx, pytest
   - Dependencies install without conflicts
@@ -63,6 +67,7 @@
 ### Feature 1.2: Configuration Management
 
 **User Story 1.2.1:** As a developer, I need centralized configuration loading so that settings are consistent across the app
+
 - **Acceptance Criteria:**
   - `app/core/config.py` with Pydantic Settings class
   - Loads from `.env` file automatically
@@ -79,6 +84,7 @@
 ### Feature 1.3: Database Setup
 
 **User Story 1.3.1:** As a developer, I need async database connection pooling so that the app can handle concurrent requests efficiently
+
 - **Acceptance Criteria:**
   - `app/core/database.py` with SQLAlchemy 2.0 async engine
   - Connection pool configured (pool_size=10, max_overflow=20)
@@ -91,6 +97,7 @@
   - `docs/architecture.md` (Section: Database Layer)
 
 **User Story 1.3.2:** As a developer, I need database migration management so that schema changes are version controlled
+
 - **Acceptance Criteria:**
   - Alembic initialized in `migrations/` directory
   - `alembic.ini` configured to use DATABASE_URL from settings
@@ -114,6 +121,7 @@
 ### Feature 2.1: Encryption Service
 
 **User Story 2.1.1:** As a user, I need my vault data encrypted with my own key so that even if the database is breached, my data is safe
+
 - **Acceptance Criteria:**
   - `app/core/encryption.py` with `derive_master_key()` function
   - Uses PBKDF2-HMAC-SHA256 with 100,000 iterations
@@ -127,6 +135,7 @@
   - `docs/security_architecture.md` (Section: Encryption at Rest)
 
 **User Story 2.1.2:** As a user, I need my vault content encrypted with industry-standard encryption so that it cannot be decrypted without my key
+
 - **Acceptance Criteria:**
   - `encrypt_content()` function using AES-256-GCM
   - Generates unique 12-byte nonce for each encryption
@@ -140,6 +149,7 @@
   - `docs/security_architecture.md` (Section: Encryption at Rest)
 
 **User Story 2.1.3:** As a user, I need tamper detection on my encrypted data so that any modification is detected
+
 - **Acceptance Criteria:**
   - `decrypt_content()` function verifies auth tag before decrypting
   - Raises `EncryptionError` if auth tag verification fails
@@ -152,6 +162,7 @@
   - `docs/security_architecture.md` (Section: Encryption at Rest)
 
 **User Story 2.1.4:** As a developer, I need 100% test coverage on encryption so that I'm confident in the security implementation
+
 - **Acceptance Criteria:**
   - Test: encrypt → decrypt returns original plaintext
   - Test: decryption with wrong key raises error
@@ -169,6 +180,7 @@
 ### Feature 2.2: JWT Authentication
 
 **User Story 2.2.1:** As a user, I need secure access tokens so that my API requests are authenticated
+
 - **Acceptance Criteria:**
   - `app/core/security.py` with `create_access_token()` function
   - Uses HS256 algorithm with JWT_SECRET_KEY
@@ -181,6 +193,7 @@
   - `docs/security_architecture.md` (Section: JWT Authentication)
 
 **User Story 2.2.2:** As a developer, I need token validation as a FastAPI dependency so that routes can require authentication
+
 - **Acceptance Criteria:**
   - `verify_access_token()` function decodes and validates JWT
   - Checks signature, expiration, required claims
@@ -194,6 +207,7 @@
   - `docs/security_architecture.md` (Section: JWT Authentication)
 
 **User Story 2.2.3:** As a user, I need refresh tokens so that I don't have to log in every 30 minutes
+
 - **Acceptance Criteria:**
   - Refresh tokens stored in sessions table as SHA-256 hash
   - Never store refresh tokens in plaintext
@@ -216,6 +230,7 @@
 ### Feature 3.1: Database Models
 
 **User Story 3.1.1:** As a developer, I need SQLAlchemy models for all entities so that I can interact with the database
+
 - **Acceptance Criteria:**
   - `app/models/user.py`: User model with google_id, email, encryption_salt (32 bytes)
   - `app/models/vault_item.py`: VaultItem with content_encrypted, metadata_encrypted, soft delete
@@ -231,6 +246,7 @@
   - `docs/database_schema.md` (Section: Complete Schema)
 
 **User Story 3.1.2:** As a developer, I need Pydantic schemas for API validation so that requests are validated
+
 - **Acceptance Criteria:**
   - `app/schemas/vault.py`: VaultItemCreate, VaultItemUpdate, VaultItemResponse
   - `app/schemas/auth.py`: UserResponse, TokenResponse
@@ -246,6 +262,7 @@
 ### Feature 3.2: Initial Migration
 
 **User Story 3.2.1:** As a developer, I need the initial database migration so that the schema is created in Railway Postgres
+
 - **Acceptance Criteria:**
   - `migrations/versions/001_initial_schema.py` creates all 7 tables
   - Creates 5 enum types: vault_item_type, vault_item_source, integration_provider, integration_status, token_type
@@ -270,6 +287,7 @@
 ### Feature 4.1: Google OAuth Flow
 
 **User Story 4.1.1:** As a user, I want to log in with my Google account so that I don't need to create a new password
+
 - **Acceptance Criteria:**
   - POST `/api/auth/google/login` endpoint returns Google OAuth URL
   - URL includes state parameter for CSRF protection
@@ -283,6 +301,7 @@
   - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.2:** As a user, when I approve Google OAuth, I want to be redirected back with a session so that I'm logged in
+
 - **Acceptance Criteria:**
   - GET `/api/auth/google/callback` endpoint handles OAuth return
   - Validates state parameter (CSRF protection)
@@ -300,6 +319,7 @@
   - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.3:** As a user, I want to refresh my access token so that I stay logged in without re-authenticating
+
 - **Acceptance Criteria:**
   - POST `/api/auth/refresh` endpoint accepts refresh_token in body
   - Validates refresh_token by checking SHA-256 hash in sessions table
@@ -315,6 +335,7 @@
   - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.4:** As a user, I want to log out so that my session is invalidated
+
 - **Acceptance Criteria:**
   - POST `/api/auth/logout` endpoint requires authentication
   - Deletes session from database
@@ -327,6 +348,7 @@
   - `docs/api_endpoints.md` (Section: Authentication Endpoints)
 
 **User Story 4.1.5:** As a user, I want to view my profile so that I can see my account information
+
 - **Acceptance Criteria:**
   - GET `/api/auth/me` endpoint requires authentication
   - Returns user profile: email, google_id, created_at, preferences
@@ -340,6 +362,7 @@
 ### Feature 4.2: Authentication Service Layer
 
 **User Story 4.2.1:** As a developer, I need authentication business logic separated from API routes so that code is testable
+
 - **Acceptance Criteria:**
   - `app/services/auth_service.py` with AuthService class
   - Methods: initiate_google_oauth(), handle_google_callback(), refresh_access_token()
@@ -364,6 +387,7 @@
 ### Feature 5.1: Vault Item CRUD
 
 **User Story 5.1.1:** As a user, I want to create a vault item so that I can securely store my notes and data
+
 - **Acceptance Criteria:**
   - POST `/api/vault/items` endpoint requires authentication
   - Request body: title, content, metadata (optional), tags (optional), type
@@ -379,6 +403,7 @@
   - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.2:** As a user, I want to view a specific vault item so that I can read my stored data
+
 - **Acceptance Criteria:**
   - GET `/api/vault/items/{item_id}` endpoint requires authentication
   - Verifies item belongs to current user (403 if not)
@@ -393,6 +418,7 @@
   - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.3:** As a user, I want to list my vault items so that I can browse my data
+
 - **Acceptance Criteria:**
   - GET `/api/vault/items` endpoint requires authentication
   - Supports pagination: page, limit (default 50)
@@ -409,6 +435,7 @@
   - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.4:** As a user, I want to update a vault item so that I can modify my stored data
+
 - **Acceptance Criteria:**
   - PUT `/api/vault/items/{item_id}` endpoint requires authentication
   - Verifies ownership (403 if not owner)
@@ -424,6 +451,7 @@
   - `docs/architecture.md` (Section: Vault Service)
 
 **User Story 5.1.5:** As a user, I want to delete a vault item so that I can remove unwanted data
+
 - **Acceptance Criteria:**
   - DELETE `/api/vault/items/{item_id}` endpoint requires authentication
   - Verifies ownership
@@ -441,6 +469,7 @@
 ### Feature 5.2: Vault Service Layer
 
 **User Story 5.2.1:** As a developer, I need vault business logic separated so that encryption is handled consistently
+
 - **Acceptance Criteria:**
   - `app/services/vault_service.py` with VaultService class
   - Methods: create_item(), get_item(), list_items(), update_item(), delete_item()
@@ -457,6 +486,7 @@
 ### Feature 5.3: Tag Management
 
 **User Story 5.3.1:** As a user, I want to create tags so that I can organize my vault items
+
 - **Acceptance Criteria:**
   - POST `/api/vault/tags` endpoint requires authentication
   - Request body: name, color (hex code, optional)
@@ -469,6 +499,7 @@
   - `docs/api_endpoints.md` (Section: Vault Endpoints - Tags)
 
 **User Story 5.3.2:** As a user, I want to list my tags so that I can see available organization options
+
 - **Acceptance Criteria:**
   - GET `/api/vault/tags` endpoint requires authentication
   - Returns all tags for current user
@@ -481,6 +512,7 @@
   - `docs/api_endpoints.md` (Section: Vault Endpoints - Tags)
 
 **User Story 5.3.3:** As a user, I want to rename or delete tags so that I can reorganize my vault
+
 - **Acceptance Criteria:**
   - PUT `/api/vault/tags/{tag_id}` allows renaming tag
   - Updates all vault items with this tag automatically
@@ -494,6 +526,7 @@
   - `docs/api_endpoints.md` (Section: Vault Endpoints - Tags)
 
 **User Story 5.3.4:** As a user, I want to filter vault items by tags so that I can find related content
+
 - **Acceptance Criteria:**
   - GET `/api/vault/items?tags[]=work&tags[]=medical` supports multiple tags
   - Returns items that have ALL specified tags (AND logic)
@@ -507,6 +540,7 @@
 ### Feature 5.4: File Upload
 
 **User Story 5.4.1:** As a user, I want to upload PDF files so that I can store documents in my vault
+
 - **Acceptance Criteria:**
   - POST `/api/vault/upload` endpoint requires authentication
   - Accepts multipart/form-data with file
@@ -535,6 +569,7 @@
 ### Feature 6.1: Epic OAuth Connection
 
 **User Story 6.1.1:** As a user, I want to connect my Epic MyChart account so that I can import my medical records
+
 - **Acceptance Criteria:**
   - POST `/api/integrations/epic/connect` endpoint requires authentication
   - Generates PKCE code_verifier and code_challenge
@@ -552,6 +587,7 @@
   - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.1.2:** As a user, when I approve Epic OAuth, I want my tokens stored securely so that the app can sync my data
+
 - **Acceptance Criteria:**
   - GET `/api/integrations/epic/callback` handles Epic redirect
   - Validates state parameter
@@ -574,6 +610,7 @@
   - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.1.3:** As a user, I want to disconnect Epic so that my tokens are removed
+
 - **Acceptance Criteria:**
   - DELETE `/api/integrations/epic` endpoint requires authentication
   - Deletes integration_tokens records
@@ -589,10 +626,11 @@
 ### Feature 6.2: FHIR Data Sync
 
 **User Story 6.2.1:** As a user, I want my Epic medical records automatically synced to my vault so that I can access them privately
+
 - **Acceptance Criteria:**
   - Background job triggered after Epic connection
   - Fetches FHIR Patient resource
-  - Fetches FHIR Observation resources (patient/{id}/Observation?_count=1000)
+  - Fetches FHIR Observation resources (patient/{id}/Observation?\_count=1000)
   - Transforms each FHIR resource to vault item:
     - Extract human-readable summary for content
     - Store full FHIR JSON in metadata_encrypted
@@ -609,6 +647,7 @@
   - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.2.2:** As a user, I want to manually trigger Epic sync so that I can get the latest data on demand
+
 - **Acceptance Criteria:**
   - POST `/api/integrations/epic/sync` endpoint requires authentication
   - Verifies Epic integration is connected
@@ -622,6 +661,7 @@
   - `docs/api_endpoints.md` (Section: Integration Endpoints - Epic)
 
 **User Story 6.2.3:** As a user, I want to see my Epic sync status so that I know when my data is updated
+
 - **Acceptance Criteria:**
   - GET `/api/integrations/epic/status` endpoint requires authentication
   - Returns: status (connected/disconnected/syncing), last_sync_at, current_job_status
@@ -636,6 +676,7 @@
 ### Feature 6.3: FHIR Transformations
 
 **User Story 6.3.1:** As a developer, I need FHIR Observation resources transformed to readable vault items so that users can understand their medical data
+
 - **Acceptance Criteria:**
   - Blood Pressure → "Blood Pressure: 120/80 mmHg on 2025-01-20"
   - Lab results → "Glucose: 95 mg/dL (Normal) on 2025-01-15"
@@ -649,6 +690,7 @@
   - `docs/architecture.md` (Section: FHIR Integration - Transformations)
 
 **User Story 6.3.2:** As a developer, I need Patient resources transformed so that demographic data is stored
+
 - **Acceptance Criteria:**
   - Creates vault item: "Patient Demographics"
   - Content: "Name: John Doe, DOB: 1990-05-15, Gender: Male, MRN: 12345"
@@ -662,6 +704,7 @@
 ### Feature 6.4: Token Refresh
 
 **User Story 6.4.1:** As a user, I want my Epic tokens automatically refreshed so that sync doesn't break
+
 - **Acceptance Criteria:**
   - Before making FHIR API calls, check access_token expiry
   - If expired, use refresh_token to get new access_token
@@ -679,6 +722,7 @@
 ### Feature 6.5: Epic Service Layer
 
 **User Story 6.5.1:** As a developer, I need Epic integration logic separated so that it's testable and maintainable
+
 - **Acceptance Criteria:**
   - `app/services/epic_service.py` with EpicService class
   - Methods: initiate_oauth(), handle_callback(), sync_patient_data(), refresh_epic_token()
@@ -704,6 +748,7 @@
 ### Feature 7.1: Chat API
 
 **User Story 7.1.1:** As a user, I want to chat with an AI that understands my vault data so that I can ask questions about my information
+
 - **Acceptance Criteria:**
   - POST `/api/chat` endpoint requires authentication
   - Request body: message, tags (optional filter)
@@ -722,6 +767,7 @@
   - `docs/architecture.md` (Section: LLM Integration)
 
 **User Story 7.1.2:** As a user, I want relevant vault items automatically included in chat context so that the AI has accurate information
+
 - **Acceptance Criteria:**
   - Context retrieval searches vault items by keyword matching
   - Searches in item titles (full-text search)
@@ -740,6 +786,7 @@
 ### Feature 7.2: Ollama Integration
 
 **User Story 7.2.1:** As a developer, I need Ollama client for streaming responses so that chat is interactive
+
 - **Acceptance Criteria:**
   - `app/services/ollama_service.py` with OllamaService class
   - `generate_stream()` method streams from `POST {OLLAMA_HOST}/api/generate`
@@ -754,6 +801,7 @@
   - `docs/architecture.md` (Section: LLM Integration - Ollama)
 
 **User Story 7.2.2:** As a user, I want the AI to use my vault data responsibly so that my privacy is maintained
+
 - **Acceptance Criteria:**
   - System prompt instructs AI: "You are a helpful assistant with access to the user's personal vault. Do not share or repeat sensitive information unless directly asked."
   - Vault context clearly labeled in prompt
@@ -769,6 +817,7 @@
 ### Feature 7.3: Context Retrieval Service
 
 **User Story 7.3.1:** As a developer, I need context retrieval logic separated so that it can be improved over time
+
 - **Acceptance Criteria:**
   - `app/services/context_service.py` with ContextService class
   - `retrieve_context()` method returns relevant vault items
@@ -792,6 +841,7 @@
 ### Feature 8.1: Unit Tests
 
 **User Story 8.1.1:** As a developer, I need 100% test coverage on encryption so that I'm confident in security
+
 - **Acceptance Criteria:**
   - `tests/unit/test_encryption.py` with 10+ tests
   - Tests: round-trip, wrong key fails, deterministic key derivation, unique nonces, tamper detection
@@ -804,6 +854,7 @@
   - `docs/testing_strategy.md` (Section: Unit Testing)
 
 **User Story 8.1.2:** As a developer, I need comprehensive tests on JWT authentication so that auth is reliable
+
 - **Acceptance Criteria:**
   - `tests/unit/test_security.py` with tests for JWT creation, validation, expiry, refresh token hashing
   - 100% code coverage on security module
@@ -817,6 +868,7 @@
 ### Feature 8.2: Integration Tests
 
 **User Story 8.2.1:** As a developer, I need integration tests for vault API so that end-to-end flows work correctly
+
 - **Acceptance Criteria:**
   - `tests/integration/test_vault_api.py` tests all vault endpoints
   - Tests: create → retrieve (content decrypted), cannot access other users' items, soft delete, tag filtering, pagination
@@ -829,6 +881,7 @@
   - `docs/testing_strategy.md` (Section: Integration Testing)
 
 **User Story 8.2.2:** As a developer, I need integration tests for Epic API so that OAuth and sync work
+
 - **Acceptance Criteria:**
   - `tests/integration/test_epic_api.py` tests Epic endpoints
   - Tests: OAuth redirect, callback creates integration, tokens encrypted in DB, sync creates vault items
@@ -843,6 +896,7 @@
 ### Feature 8.3: Test Infrastructure
 
 **User Story 8.3.1:** As a developer, I need test fixtures and utilities so that writing tests is easy
+
 - **Acceptance Criteria:**
   - `tests/conftest.py` with fixtures: db_session, test_user, auth_headers, test_vault_item
   - Test database automatically created and torn down
@@ -855,6 +909,7 @@
   - `docs/testing_strategy.md` (Section: Test Infrastructure)
 
 **User Story 8.3.2:** As a developer, I need pytest configuration so that tests run consistently
+
 - **Acceptance Criteria:**
   - `pytest.ini` with asyncio_mode=auto, testpaths, coverage config
   - `make test` runs all tests with coverage report
@@ -869,6 +924,7 @@
 ### Feature 8.4: CI/CD Pipeline
 
 **User Story 8.4.1:** As a developer, I need automated linting on every push so that code quality is enforced
+
 - **Acceptance Criteria:**
   - `.github/workflows/backend-ci.yml` with lint job
   - Runs `ruff check` and `ruff format --check`
@@ -881,6 +937,7 @@
   - `docs/testing_strategy.md` (Section: CI/CD Pipeline)
 
 **User Story 8.4.2:** As a developer, I need automated tests on every push so that bugs are caught early
+
 - **Acceptance Criteria:**
   - CI workflow has test job with Postgres service
   - Runs all pytest tests with coverage
@@ -893,6 +950,7 @@
   - `docs/testing_strategy.md` (Section: CI/CD Pipeline)
 
 **User Story 8.4.3:** As a developer, I need security scanning so that vulnerabilities are detected
+
 - **Acceptance Criteria:**
   - CI workflow includes safety check (dependency vulnerabilities)
   - Optional: Bandit for SAST (static analysis)
@@ -914,6 +972,7 @@
 ### Feature 9.1: Docker Development
 
 **User Story 9.1.1:** As a developer, I want to run the entire stack with docker-compose so that setup is simple
+
 - **Acceptance Criteria:**
   - `backend/Dockerfile` builds backend image
   - `docker-compose.yml` starts backend + postgres + redis + ollama
@@ -927,6 +986,7 @@
 ### Feature 9.2: API Documentation
 
 **User Story 9.2.1:** As a frontend developer, I want interactive API documentation so that I know how to call endpoints
+
 - **Acceptance Criteria:**
   - FastAPI auto-generates OpenAPI docs at `/docs`
   - All endpoints documented with descriptions, request/response schemas
@@ -939,6 +999,7 @@
 ### Feature 9.3: Development Scripts
 
 **User Story 9.3.1:** As a developer, I want database seeding scripts so that I can test with realistic data
+
 - **Acceptance Criteria:**
   - `scripts/seed_db.py` creates sample users, vault items, tags
   - `make seed` command runs seeding
@@ -958,6 +1019,7 @@
 ### Feature 10.1: Error Handling
 
 **User Story 10.1.1:** As a user, I want helpful error messages when something goes wrong so that I understand what happened
+
 - **Acceptance Criteria:**
   - Custom exception classes: EncryptionError, AuthenticationError, IntegrationError
   - Exception handlers for 400, 401, 403, 404, 500
@@ -968,6 +1030,7 @@
 - **Status:** Not Started
 
 **User Story 10.1.2:** As a developer, I want structured logging so that I can debug production issues
+
 - **Acceptance Criteria:**
   - JSON-formatted logs (not plain text)
   - Log levels: DEBUG (dev), INFO (prod)
@@ -978,6 +1041,7 @@
 - **Status:** Not Started
 
 **User Story 10.1.3:** As a developer, I want audit logging for critical actions so I can debug user-specific incidents without exposing sensitive content
+
 - **Acceptance Criteria:**
   - Logs: login, logout, create/delete vault item, Epic connect/disconnect
   - Never log decrypted content or tokens
@@ -990,6 +1054,7 @@
 ### Feature 10.2: Security Hardening
 
 **User Story 10.2.1:** As a user, I want my API protected from common attacks so that my data is safe
+
 - **Acceptance Criteria:**
   - CORS configured with allowed origins from .env
   - Basic security headers: X-Frame-Options, X-Content-Type-Options
@@ -999,6 +1064,7 @@
 - **Status:** Not Started
 
 **User Story 10.2.2:** As a developer, I want per-route rate limiting rules so chat cannot be spammed or abused
+
 - **Acceptance Criteria:**
   - 20/min chat endpoints
   - 100/min vault endpoints
@@ -1012,6 +1078,7 @@
 ### Feature 10.3: Performance Optimization
 
 **User Story 10.3.1:** As a user, I want fast API responses so that the app feels snappy
+
 - **Acceptance Criteria:**
   - Database connection pooling (pool_size=10, max_overflow=20)
   - Pagination on all list endpoints (prevent loading 1000s of items)
@@ -1024,6 +1091,7 @@
 ### Feature 10.4: Health Checks
 
 **User Story 10.4.1:** As a DevOps engineer, I want health check endpoints so that I can monitor service status
+
 - **Acceptance Criteria:**
   - GET `/health` returns 200 OK (basic liveness check)
   - GET `/health/db` checks database connectivity
@@ -1035,6 +1103,7 @@
 ### Feature 10.5: Environment Management
 
 **User Story 10.5.1:** As a developer, I want dev/prod environment variable separation so nothing breaks when deploying
+
 - **Acceptance Criteria:**
   - `.env.local` for development
   - `.env.production` for production
@@ -1048,6 +1117,7 @@
 ### Feature 10.6: Deployment Pipeline
 
 **User Story 10.6.1:** As a developer, I need a pinned reproducible environment in prod so that deployment is predictable
+
 - **Acceptance Criteria:**
   - Production-ready Dockerfile with pinned dependencies
   - Run migrations automatically on deploy
@@ -1060,6 +1130,7 @@
 ### Feature 10.7: Backup & Recovery
 
 **User Story 10.7.1:** As a user, I want encrypted backups of my vault so I don't lose data
+
 - **Acceptance Criteria:**
   - Daily automated backup of encrypted database (not plaintext)
   - Backups stored in Railway or S3
@@ -1074,13 +1145,14 @@
 
 ## Epic 11: Frontend Integration [P0]
 
-**Goal:** Build minimal React UI for authentication, vault management, and chat
+**Goal:** Build minimal Next.js UI for authentication, vault management, and chat
 
 **Timeline:** Week 4-5
 
 ### Feature 11.1: Authentication UI
 
 **User Story 11.1.1:** As a user, I want a "Sign In with Google" button that sends me through the OAuth flow so I can log in easily
+
 - **Acceptance Criteria:**
   - Button redirects to backend `/api/auth/google/login` endpoint
   - Handles OAuth callback and stores access_token + refresh_token securely
@@ -1092,6 +1164,7 @@
 - **Status:** Not Started
 
 **User Story 11.1.2:** As a user, I want automatic refresh of my access token so I stay logged in without interruption
+
 - **Acceptance Criteria:**
   - Frontend service detects 401 Unauthorized responses
   - Automatically calls `/api/auth/refresh` with refresh_token
@@ -1103,6 +1176,7 @@
 - **Status:** Not Started
 
 **User Story 11.1.3:** As a user, I want to log out so that my session ends
+
 - **Acceptance Criteria:**
   - Logout button calls `/api/auth/logout`
   - Clears all tokens from memory/cookies
@@ -1115,6 +1189,7 @@
 ### Feature 11.2: Vault UI
 
 **User Story 11.2.1:** As a user, I want a simple UI to create, view, and edit vault items
+
 - **Acceptance Criteria:**
   - List view shows vault items (title, type, tags, created_at)
   - List view does NOT show decrypted content (performance)
@@ -1128,6 +1203,7 @@
 - **Status:** Not Started
 
 **User Story 11.2.2:** As a user, I want a clean editor for vault content
+
 - **Acceptance Criteria:**
   - Markdown or plaintext editor
   - Title field (required)
@@ -1142,6 +1218,7 @@
 - **Status:** Not Started
 
 **User Story 11.2.3:** As a user, I want to filter vault items by tags and type so that I can find related content
+
 - **Acceptance Criteria:**
   - Tag filter dropdown (multi-select)
   - Type filter dropdown (single select)
@@ -1156,6 +1233,7 @@
 ### Feature 11.3: Chat UI
 
 **User Story 11.3.1:** As a user, I want a chat UI that streams responses from the backend so that the chat feels real-time
+
 - **Acceptance Criteria:**
   - Chat input box at bottom
   - Send button triggers POST `/api/chat` with SSE streaming
@@ -1170,6 +1248,7 @@
 - **Status:** Not Started
 
 **User Story 11.3.2:** As a user, I want to filter which vault items are used as chat context
+
 - **Acceptance Criteria:**
   - Tag filter dropdown in chat UI
   - Selected tags sent with chat request
@@ -1181,21 +1260,23 @@
 
 ### Feature 11.4: Frontend Infrastructure
 
-**User Story 11.4.1:** As a developer, I need a React + Vite + TypeScript project with shadcn/ui components
+**User Story 11.4.1:** As a developer, I need a Next.js + TypeScript project (App Router) with shadcn/ui components
+
 - **Acceptance Criteria:**
-  - Vite project initialized in `frontend/` directory
+  - Next.js project initialized in `frontend/` directory
   - TypeScript configured with strict mode
   - shadcn/ui installed and configured
   - API client service for backend calls (axios or fetch)
-  - Environment variables: `VITE_API_BASE_URL`, `VITE_GOOGLE_OAUTH_CLIENT_ID`
+  - Environment variables: `NEXT_PUBLIC_API_BASE_URL`, `NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID`
   - Hot reload works for local development
 - **Priority:** P0
 - **Estimate:** 3 hours
 - **Status:** Not Started
 
-**User Story 11.4.2:** As a developer, I need frontend auth state management so that protected routes work
+**User Story 11.4.2:** As a developer, I need Next.js auth state management so that protected routes work
+
 - **Acceptance Criteria:**
-  - Auth context provider (React Context or Zustand)
+  - Auth context provider (Next.js client context or Zustand)
   - Protected route wrapper (redirects to login if not authenticated)
   - Token refresh logic in API interceptor
   - User profile state globally accessible
@@ -1212,6 +1293,7 @@
 **Total User Stories:** 100+
 
 **Critical Path (Week 1-5):**
+
 1. Epic 1: Foundation (3 days)
 2. Epic 2: Security (2 days)
 3. Epic 3: Database (1 day)
@@ -1222,8 +1304,6 @@
 8. Epic 8: Testing (2 days)
 9. Epic 11: Frontend (4 days)
 
-**Post-MVP:**
-9. Epic 9: Developer Experience
-10. Epic 10: Production Readiness
+**Post-MVP:** 9. Epic 9: Developer Experience 10. Epic 10: Production Readiness
 
 **Estimated Total:** 22 days (4.5 weeks) for core features + frontend + testing
