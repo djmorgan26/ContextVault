@@ -2,15 +2,21 @@
 
 **Project:** Context Vault
 **Purpose:** Privacy-first personal intelligence system with encrypted vault + Epic MyChart integration
-**Tech Stack:** Python (FastAPI), React (planned), PostgreSQL, Ollama, Epic SMART on FHIR
+**Tech Stack:** Python (FastAPI), React (Next.js), PostgreSQL (Supabase), Ollama, Epic SMART on FHIR
+**Knowledge Items**: 1 feature • 1 component • 1 pattern
 
 ---
 
 ## Recent Changes
 
-> Last updated: 2025-11-25
+> Last updated: 2025-11-28
 
-*No changes captured yet. Use `/capture` after completing features to document them here.*
+### 2025-11-28
+- ✅ **Added**: Backend foundation with async SQLAlchemy, Alembic migrations, models → [backend-setup](./knowledge/components/backend-foundation.md) (pending)
+- ✅ **Added**: Google OAuth authentication with JWT tokens and sessions → [google-oauth-authentication](./knowledge/features/google-oauth-authentication.md)
+- ✅ **Added**: Encryption service with AES-256-GCM and PBKDF2 key derivation → [encryption-service](./knowledge/components/encryption-service.md)
+- 📝 **Added**: Multi-layer environment configuration pattern → [environment-configuration](./knowledge/patterns/environment-configuration.md)
+- 🔧 **Fixed**: Backend startup issues (CORS parsing, database URL, NullPool config)
 
 ---
 
@@ -18,15 +24,15 @@
 
 ### Features
 
-*Feature documentation will appear here after using `/capture`*
+- [Google OAuth Authentication](./knowledge/features/google-oauth-authentication.md) - User login with Google, JWT tokens, session management
 
 ### Components
 
-*Component documentation will appear here after using `/capture`*
+- [Encryption Service](./knowledge/components/encryption-service.md) - AES-256-GCM encryption, PBKDF2 key derivation
 
 ### Patterns
 
-*Pattern documentation will appear here after using `/capture`*
+- [Multi-Layer Environment Configuration](./knowledge/patterns/environment-configuration.md) - Three-layer .env structure for secrets and config
 
 ---
 
