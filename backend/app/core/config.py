@@ -22,14 +22,6 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    @field_validator("CORS_ORIGINS", mode="before")
-    @classmethod
-    def parse_cors_origins(cls, v: Union[str, list[str]]) -> list[str]:
-        """Parse CORS_ORIGINS from comma-separated string or list."""
-        if isinstance(v, str):
-            return [origin.strip() for origin in v.split(",")]
-        return v
-
     # Application
     APP_NAME: str = "ContextVault"
     APP_VERSION: str = "0.1.0"
@@ -68,8 +60,13 @@ class Settings(BaseSettings):
     OLLAMA_DEFAULT_MODEL: str = "llama3.1:8b"
     OLLAMA_TIMEOUT_SECONDS: int = 60
 
-    # CORS
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:8000"]
+    # CORS (stored as comma-separated string, parsed to list)
+    _CORS_ORIGINS: str = "http://localhost:3000,http://localhost:8000"
+
+    @property
+    def CORS_ORIGINS(self) -> list[str]:
+        """Parse CORS origins from comma-separated string."""
+        return [origin.strip() for origin in self._CORS_ORIGINS.split(",")]
 
     # File Upload
     MAX_UPLOAD_SIZE_MB: int = 10

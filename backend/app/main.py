@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.core.database import close_db
+from app.api import auth, health
 
 # Create FastAPI app
 app = FastAPI(
@@ -52,16 +53,6 @@ async def root():
     }
 
 
-@app.get("/health")
-async def health_check():
-    """Health check endpoint."""
-    return {"status": "healthy"}
-
-
-# Import and include API routers
-# TODO: Add routers as they are created
-# from app.api import auth, vault, integrations, chat
-# app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
-# app.include_router(vault.router, prefix="/api/vault", tags=["vault"])
-# app.include_router(integrations.router, prefix="/api/integrations", tags=["integrations"])
-# app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
+# Include API routers
+app.include_router(auth.router)
+app.include_router(health.router)

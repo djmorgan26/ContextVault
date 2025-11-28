@@ -12,15 +12,31 @@ from typing import AsyncGenerator
 from app.core.config import settings
 
 # Create async engine with connection pooling
-engine = create_async_engine(
-    settings.get_database_url().replace("postgresql://", "postgresql+asyncpg://"),
-    echo=settings.DEBUG,
-    pool_size=10,
-    max_overflow=20,
-    pool_pre_ping=True,
-    pool_recycle=3600,
-    poolclass=NullPool if settings.is_development() else None,
-)
+# Convert postgres:// to postgresql+asyncpg:// for SQLAlchemy async
+database_url = settings.get_database_url()
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql+asyncpg://", 1)
+elif database_url.startswith("postgresql://"):
+    database_url = database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
+# Configure engine based on environment
+if settings.is_development():
+    # Development: use NullPool (no pooling args)
+    engine = create_async_engine(
+        database_url,
+        echo=settings.DEBUG,
+        poolclass=NullPool,
+    )
+else:
+    # Production: use connection pooling
+    engine = create_async_engine(
+        database_url,
+        echo=settings.DEBUG,
+        pool_size=10,
+        max_overflow=20,
+        pool_pre_ping=True,
+        pool_recycle=3600,
+    )
 
 # Create async session factory
 AsyncSessionLocal = async_sessionmaker(
