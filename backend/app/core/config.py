@@ -5,8 +5,9 @@ Loads configuration from environment variables with validation.
 Loads from both root .env (shared secrets) and backend/.env (config)
 """
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import Optional
+from typing import Optional, Union
 from pathlib import Path
 
 
@@ -20,6 +21,14 @@ class Settings(BaseSettings):
         case_sensitive=False,
         extra="ignore",
     )
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Union[str, list[str]]) -> list[str]:
+        """Parse CORS_ORIGINS from comma-separated string or list."""
+        if isinstance(v, str):
+            return [origin.strip() for origin in v.split(",")]
+        return v
 
     # Application
     APP_NAME: str = "ContextVault"
