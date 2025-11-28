@@ -2,17 +2,20 @@
 Application configuration management using Pydantic Settings.
 
 Loads configuration from environment variables with validation.
+Loads from both root .env (shared secrets) and backend/.env (config)
 """
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional
+from pathlib import Path
 
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        # Load from both root .env (secrets) and backend .env (config)
+        env_file=("../.env", ".env"),
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
