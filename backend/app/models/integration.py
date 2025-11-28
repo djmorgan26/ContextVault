@@ -54,7 +54,7 @@ class Integration(Base):
     status = Column(Enum(IntegrationStatus), nullable=False, default=IntegrationStatus.CONNECTED)
 
     # Provider-specific metadata (JSON)
-    metadata = Column(JSON, default={}, nullable=False)
+    provider_metadata = Column(JSON, default={}, nullable=False)
 
     # Sync tracking
     last_sync_at = Column(TIMESTAMP(timezone=True), nullable=True)

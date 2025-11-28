@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.core.database import close_db
-from app.api import auth, health
+from app.api import auth, health, vault
 
 # Create FastAPI app
 app = FastAPI(
@@ -56,3 +56,4 @@ async def root():
 # Include API routers
 app.include_router(auth.router)
 app.include_router(health.router)
+app.include_router(vault.router)
