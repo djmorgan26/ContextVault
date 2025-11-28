@@ -3,7 +3,7 @@
 **Project:** Context Vault
 **Purpose:** Privacy-first personal intelligence system with encrypted vault + Epic MyChart integration
 **Tech Stack:** Python (FastAPI), React (Next.js), PostgreSQL (Supabase), Ollama, Epic SMART on FHIR
-**Knowledge Items**: 1 feature • 1 component • 1 pattern
+**Knowledge Items**: 2 features • 1 component • 2 patterns
 
 ---
 
@@ -16,6 +16,8 @@
 - ✅ **Added**: Google OAuth authentication with JWT tokens and sessions → [google-oauth-authentication](./knowledge/features/google-oauth-authentication.md)
 - ✅ **Added**: Encryption service with AES-256-GCM and PBKDF2 key derivation → [encryption-service](./knowledge/components/encryption-service.md)
 - 📝 **Added**: Multi-layer environment configuration pattern → [environment-configuration](./knowledge/patterns/environment-configuration.md)
+- ✅ **Added**: Vault item management (CRUD + encryption) → [vault-item-management](./knowledge/features/vault-item-management.md)
+- ✅ **Added**: Authenticated dependency injection pattern → [authenticated-dependency-injection](./knowledge/patterns/authenticated-dependency-injection.md)
 - 🔧 **Fixed**: Backend startup issues (CORS parsing, database URL, NullPool config)
 
 ---
@@ -25,6 +27,7 @@
 ### Features
 
 - [Google OAuth Authentication](./knowledge/features/google-oauth-authentication.md) - User login with Google, JWT tokens, session management
+- [Vault Item Management](./knowledge/features/vault-item-management.md) - CRUD operations for encrypted vault items with tagging and filtering
 
 ### Components
 
@@ -33,6 +36,7 @@
 ### Patterns
 
 - [Multi-Layer Environment Configuration](./knowledge/patterns/environment-configuration.md) - Three-layer .env structure for secrets and config
+- [Authenticated Dependency Injection](./knowledge/patterns/authenticated-dependency-injection.md) - FastAPI pattern for JWT verification, user lookup, and key derivation
 
 ---
 
