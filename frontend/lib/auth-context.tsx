@@ -29,7 +29,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const response = await fetch("/api/auth/me", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+      const response = await fetch(`${API_URL}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -58,7 +59,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!refreshTokenValue) return false
 
     try {
-      const response = await fetch("/api/auth/refresh", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+      const response = await fetch(`${API_URL}/api/auth/refresh`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refresh_token: refreshTokenValue }),
@@ -82,13 +84,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = () => {
     // Redirect to backend OAuth endpoint
-    window.location.href = "/api/auth/google/login"
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+    window.location.href = `${API_URL}/api/auth/google/login`
   }
 
   const logout = async () => {
     try {
       if (refreshTokenValue) {
-        await fetch("/api/auth/logout", {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+        await fetch(`${API_URL}/api/auth/logout`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,

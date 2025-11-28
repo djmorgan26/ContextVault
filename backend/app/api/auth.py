@@ -28,7 +28,7 @@ async def google_login(redirect_to: Optional[str] = Query(None)):
     return RedirectResponse(auth_url)
 
 
-@router.get("/google/callback", response_model=LoginResponse)
+@router.get("/google/callback")
 async def google_callback(
     code: str = Query(...),
     state: str = Query(...),
@@ -40,14 +40,17 @@ async def google_callback(
         state: State token for CSRF validation
 
     Returns:
-        LoginResponse: Access token, refresh token, and user info
+        RedirectResponse: Redirect to frontend with tokens in URL params
 
     Raises:
         HTTPException: 400 if state invalid, 401 if token exchange fails
     """
     try:
         result = await auth_service.handle_google_callback(code, state)
-        return result
+        # Redirect to frontend with tokens
+        frontend_url = "http://localhost:3000"  # TODO: Make this configurable
+        redirect_url = f"{frontend_url}/?access_token={result['access_token']}&refresh_token={result['refresh_token']}"
+        return RedirectResponse(redirect_url)
     except HTTPException:
         raise
     except Exception as e:
